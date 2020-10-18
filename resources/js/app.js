@@ -5,8 +5,6 @@ import Vue from 'vue'
 
 import Vuetify from 'vuetify'; 
 
-//import Vuetify from '@/plugins/vuetify'
-
 require('@/plugins/registerComponents')
 
 Vue.use(Vuetify);
