@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EmployeeController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,10 @@ use App\Http\Controllers\Auth\LoginController;
 
 // Dashboard
 
-Route::get('/', [DashboardController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
+//Employee
+Route::get('/employees', [EmployeeController::class, 'index']);
 
 Auth::routes();
 

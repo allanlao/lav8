@@ -3,12 +3,12 @@
     <navigation-drawer></navigation-drawer>
     <app-bar></app-bar>
 
-    <v-content>
+    <v-main>
       <v-container fluid scroll-region>
         <flash-messages></flash-messages>
         <slot/>
       </v-container>
-    </v-content>
+    </v-main>
 
   </v-app>
 </template>

@@ -7,7 +7,7 @@
     <v-app-bar flat color="#303030">
       <v-row align="center" justify="center">
         <v-col cols="12" class="text-center pt-6">
-          <inertia-link href="/">
+          <inertia-link href="/employees">
             <logo style="fill: white" height="28" />
           </inertia-link>
         </v-col>
@@ -18,7 +18,7 @@
         :value="currentController"
         active-class="light-blue lighten-5 blue--text text--darken-4"
       >
-        <v-list-item link @click="$inertia.visit(route('dashboard'))" value="/">
+        <v-list-item link @click="$inertia.visit(route('dashboard.index'))" value="/dashboard">
           <v-list-item-icon>
             <v-icon>dashboard</v-icon>
           </v-list-item-icon>
@@ -29,13 +29,13 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="$inertia.visit(route('organizations.index'))" value="/organizations">
+        <v-list-item link @click="$inertia.visit(route('employees.index'))" value="/employees">
           <v-list-item-icon>
             <v-icon>business</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>
-              Organizations
+              Employees
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>

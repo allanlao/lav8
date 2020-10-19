@@ -17,6 +17,7 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
+   .sourceMaps()
    .webpackConfig({
   
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
@@ -27,6 +28,8 @@ mix.js('resources/js/app.js', 'public/js')
         '@': path.resolve('resources/js'),
       },
     },
+}).babelConfig({
+  plugins: ['@babel/plugin-syntax-dynamic-import'],
 })
 
  
