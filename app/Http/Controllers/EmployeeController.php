@@ -17,5 +17,10 @@ class EmployeeController extends Controller
        
         return Inertia::render('Employees/Index',['data'=>$data]);
     }
+
+    public function create()
+    {
+        return Inertia::render('Employees/Create');
+    }
 }
 

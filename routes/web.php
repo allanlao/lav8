@@ -22,6 +22,8 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 
 //Employee
 Route::get('/employees', [EmployeeController::class, 'index']);
+//Employee
+Route::post('/employees', [EmployeeController::class, 'create']);
 
 Auth::routes();
 

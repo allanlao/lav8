@@ -57,7 +57,7 @@ export default {
 
   methods: {
     create() {
-      this.$inertia.visit(route("organizations.create"));
+      this.$inertia.visit(route("employees.create"));
     },
     edit(_organisation) {
       this.$inertia.visit(route("organizations.edit", _organisation));
