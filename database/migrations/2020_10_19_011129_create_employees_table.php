@@ -38,6 +38,7 @@ class CreateEmployeesTable extends Migration
             $table->enum('employment_status', ['probationary', 'regular', 'permanent', 'resigned', 'terminated'])->default('probationary');
          
             $table->enum('is_active', ['Y', 'N'])->default('Y');
+            $table->timestamps('deleted_at');
             $table->timestamps();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->foreign('position_id')->references('id')->on('positions');

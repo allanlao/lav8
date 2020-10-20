@@ -14,7 +14,7 @@ class EmployeeController extends Controller
     {
         $data = Employee::all();
 
-       
+       dd($data);
         return Inertia::render('Employees/Index',['data'=>$data]);
     }
 

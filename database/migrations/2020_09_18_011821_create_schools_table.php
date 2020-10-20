@@ -14,7 +14,7 @@ class CreateSchoolsTable extends Migration
     public function up()
     {
         Schema::create('schools', function (Blueprint $table) {
-            $table->integer('id')->unsigned()->index();
+            $table->increments('id');
             $table->string('name', 50);
             $table->string('district', 50);
             $table->string('division', 50);

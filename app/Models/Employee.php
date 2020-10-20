@@ -28,22 +28,23 @@ class Employee extends Model
         'employment_status',
         'tin',
         'is_active',
+        'deleted_at'
         ];
 
         public function scopeFilter($query, array $filters)
         {
             $query->when($filters['search'] ?? null, function ($query, $search) {
                 $query->where('lastname', 'like', '%'.$search.'%');
-            })->when($filters['inactive'] ?? null, function ($query, $inactive) {
-                if ($inactive === 'with') {
-                    $query->withInactive();
+            })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+                if ($trashed === 'with') {
+                    $query->withTrashed();
                 } elseif ($trashed === 'only') {
-                    $query->onlyInactive();
+                    $query->onlyTrashed();
                 }
             });
         }
 
-        public function getFullNameAttribute()
+        public function getNameAttribute()
         {
             return "{$this->lastname}, {$this->firstname} {$this->middlename}";
         }
