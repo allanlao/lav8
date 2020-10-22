@@ -1,45 +1,24 @@
 <template>
   <v-row>
-    <v-col cols="12" class="py-0">
-      <v-row justify="end" dense>
-        <v-col cols="auto" class="py-0">
-          <v-btn @click="create" color="primary">Create Organization</v-btn>
-        </v-col>
-      </v-row>
+    <v-col cols="4" align-self="center">
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        hide-details
+        outlined
+      ></v-text-field>
+    </v-col>
+    <v-col cols="4" offset="4" align-self="center">
+      <v-btn @click="create" color="primary">Create Organization</v-btn>
     </v-col>
 
     <v-col cols="12">
-      <data-table-wrapper
-        :items="data"
+      <v-data-table
         :headers="headers"
-        with-search
-        sort-by="lastname"
-      >
-        <template #item="{ item }">
-          <tr>
-            <td>
-              {{ item.id }}
-            </td>
-            <td>
-              {{ item.firstname }}
-            </td>
-            <td>{{ item.city }}</td>
-            <td>{{ item.phone }}</td>
-
-            <td class="text-right">
-
-              <template v-if="item.deleted_at">
-                <v-chip color="warning" outlined>Deleted</v-chip>
-              </template>
-
-              <v-btn text icon @click="edit(item.id)">
-                <v-icon>edit</v-icon>
-              </v-btn>
-            </td>
-          </tr>
-        </template>
-
-      </data-table-wrapper>
+        :items="data"
+        :search="search"
+      ></v-data-table>
     </v-col>
   </v-row>
 </template>
@@ -52,29 +31,36 @@ export default {
 
   layout: (h, page) => h(Layout, [page]),
 
-  props: ["data"],
+  props: {
+    data: Array,
+  },
 
   data: (vm) => ({
     search: "",
     headers: [
       { text: "ID", value: "id" },
-      { text: "Name", value: "firstname" },
-      { text: "School", value: "school_id" },
-      { text: "Name", value: "lastname" },
+      { text: "Name", value: "full_name" },
+      { text: "School", value: "school.name" },
+
+      { text: "Postion", value: "position.name" },
       { text: "", sortable: false },
     ],
   }),
 
   methods: {
     create() {
-      this.$inertia.get('/employees/create',  {
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-              }, {
-              onSuccess: () => {
-                // Handle success event
-              },
-            });
+      this.$inertia.get(
+        "/employees/create",
+        {
+          name: "John Doe",
+          email: "john.doe@example.com",
+        },
+        {
+          onSuccess: () => {
+            // Handle success event
+          },
+        }
+      );
     },
     edit(_organisation) {
       this.$inertia.visit(route("organizations.edit", _organisation));

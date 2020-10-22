@@ -67,7 +67,7 @@
         ></v-text-field>
       </v-col>
 
-    <v-col cols="12" lg="6">
+      <v-col cols="12" lg="6">
         <v-select
           v-model="form.school_id"
           :error-messages="$page.errors"
@@ -85,7 +85,7 @@
         ></v-text-field>
       </v-col>
 
-        <v-col cols="12" lg="3">
+      <v-col cols="12" lg="3">
         <v-select
           v-model="form.employment_status"
           :error-messages="$page.errors"
@@ -95,8 +95,16 @@
         ></v-select>
       </v-col>
 
+      <v-col cols="12" lg="3">
+        <v-text-field
+          v-model="form.position_id"
+          :error-messages="$page.errors"
+          label="Position"
+          outlined
+        ></v-text-field>
+      </v-col>
 
-<v-col cols="12" lg="3">
+      <v-col cols="12" lg="3">
         <v-text-field
           v-model="form.email"
           :error-messages="$page.errors"
@@ -104,7 +112,6 @@
           outlined
         ></v-text-field>
       </v-col>
-     
     </v-row>
   </v-form>
 </template>
@@ -118,11 +125,13 @@ export default {
     errors: Object,
   },
 
- data: vm => ({
-    gender: [
-      { value: "m", text: "Male" },
-      { value: "f", text: "Female" },
-    ],
-  }),
+  data() {
+    return {
+      gender: [
+        { value: "m", text: "Male" },
+        { value: "f", text: "Female" },
+      ],
+    };
+  },
 };
 </script>

@@ -21,7 +21,7 @@ use App\Http\Controllers\EmployeeController;
 Route::get('/', [DashboardController::class, 'index']);
 
 //Employee
-Route::get('/employees', [EmployeeController::class, 'index']);
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');;
 Route::get('/employees/create', [EmployeeController::class, 'create']);
 Route::post('/employees/store', [EmployeeController::class, 'store']);
 //Employee

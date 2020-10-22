@@ -9,6 +9,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $appends = ['full_name'];
+
     protected $fillable = [
         'id',
         'firstname',
@@ -44,17 +46,17 @@ class Employee extends Model
             });
         }
 
-        public function getNameAttribute()
+        public function getFullNameAttribute()
         {
             return "{$this->lastname}, {$this->firstname} {$this->middlename}";
         }
 
-        public function positions()
+        public function position()
         {
             return $this->belongsTo(Position::class);
         }
 
-        public function schools()
+        public function school()
         {
             return $this->belongsTo(School::class);
         }
