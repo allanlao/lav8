@@ -1,23 +1,15 @@
 require('./bootstrap');
 
-//import { InertiaApp } from '@inertiajs/inertia-vue'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import colors from 'vuetify/lib/util/colors'
 import Vue from 'vue'
-
-import Vuetify from 'vuetify'; 
+import Vuetify from 'vuetify';
 
 require('@/plugins/registerComponents')
 
 Vue.use(Vuetify);
-
-//Vue.use(InertiaApp)
-
 Vue.use(plugin)
 
-
-
-Vue.use(Vuetify)
 
 const options = {
   theme: {
@@ -43,7 +35,7 @@ const options = {
 const el = document.getElementById('app')
 
 new Vue({
-    vuetify: new Vuetify(options),
+  vuetify: new Vuetify(options),
   render: h => h(App, {
     props: {
       initialPage: JSON.parse(el.dataset.page),

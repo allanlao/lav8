@@ -18,12 +18,14 @@ use App\Http\Controllers\EmployeeController;
 
 // Dashboard
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/', [DashboardController::class, 'index']);
 
 //Employee
 Route::get('/employees', [EmployeeController::class, 'index']);
+Route::get('/employees/create', [EmployeeController::class, 'create']);
+Route::post('/employees/store', [EmployeeController::class, 'store']);
 //Employee
-Route::post('/employees', [EmployeeController::class, 'create']);
+//Route::get('/employees', [EmployeeController::class, 'create']);
 
 Auth::routes();
 

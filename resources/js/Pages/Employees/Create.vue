@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <organization-form v-bind:form.sync="form"></organization-form>
+      <employees-form v-bind:form.sync="form"></employees-form>
     </v-col>
 
     <v-col cols="12">
@@ -15,7 +15,7 @@ import Layout from '@shared/Layout'
 
 export default {
   metaInfo: {
-    title: 'Create Emplotee',
+    title: 'Create Employee',
     goBack: {
       title: 'Employees',
       url: 'employees.index',
@@ -29,21 +29,34 @@ export default {
   data: vm => ({
     sending: false,
     form: {
-      name: null,
+      id:null,
+      firstname: null,
+      lastname: null,
+      middlename: null,
+      school_id: null,
+      entrance_to_duty: null,
+      gsis_no: null,
+      tin: null,
       email: null,
-      phone: null,
-      address: null,
-      city: null,
-      region: null,
-      country: null,
-      postal_code: null,
+      employment_status:null,
+      mobile :null,
+      gender :null,
+      birthday:null,
+
     },
   }),
   methods: {
     submit() {
       this.sending = true
-      this.$inertia.post(this.route('employees.store'), this.form)
-        .then(() => this.sending = false)
+   
+
+        this.$inertia.post('/employees/store',  
+              this.form
+              , {
+              onSuccess: () => {
+                // Handle success event
+              },
+            }).then(() => this.sending = false)
     },
   },
 }

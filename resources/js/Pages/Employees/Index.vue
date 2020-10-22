@@ -13,7 +13,7 @@
         :items="data"
         :headers="headers"
         with-search
-        sort-by="name"
+        sort-by="lastname"
       >
         <template #item="{ item }">
           <tr>
@@ -67,7 +67,14 @@ export default {
 
   methods: {
     create() {
-      this.$inertia.visit(route("employees.create"));
+      this.$inertia.get('/employees/create',  {
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+              }, {
+              onSuccess: () => {
+                // Handle success event
+              },
+            });
     },
     edit(_organisation) {
       this.$inertia.visit(route("organizations.edit", _organisation));

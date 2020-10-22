@@ -19,12 +19,11 @@ export default {
   name: "Layout",
   data() {
     return {
-      showUserMenu: false,
+   //   showUserMenu: false,
      // accounts: null,
     }
   },
-  computed: {
-  },
+ 
   methods: {
     url() {
       return location.pathname.substr(1)
