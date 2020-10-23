@@ -200,7 +200,7 @@ export default {
 
   methods: {
     submit() {
-      this.$inertia.get("/employees/store", this.form);
+      this.$inertia.post("/employees/store", this.form);
     },
   },
 };

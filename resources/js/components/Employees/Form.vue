@@ -1,128 +1,160 @@
 <template>
-  <v-form ref="form">
-    <v-row>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.id"
-          :error-messages="$page.errors"
-          label="Employee Number"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.firstname"
-          :error-messages="$page.errors"
-          label="Firstname"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.middlename"
-          :error-messages="$page.errors"
-          label="Middlename"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.lastname"
-          :error-messages="$page.errors"
-          label="Lastname"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-select
-          v-model="form.gender"
-          :error-messages="$page.errors"
-          :items="gender"
-          label="Gender"
-          outlined
-        ></v-select>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.birthday"
-          :error-messages="$page.errors"
-          label="Birthday"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.tin"
-          :error-messages="$page.errors"
-          label="TIN"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.gsis_no"
-          :error-messages="$page.errors"
-          label="GSIS NO"
-          outlined
-        ></v-text-field>
-      </v-col>
+  <v-row>
+    <v-col cols="12">
+      <v-form ref="form">
+        <v-row>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.id"
+              :error-messages="parent_error.idw"
+              label="Employee Number"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.firstname"
+              :error-messages="errors.firstname"
+              label="Firstname"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.middlename"
+              :error-messages="errors.middlename"
+              label="Middlename"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.lastname"
+              :error-messages="errors.lastname"
+              label="Lastname"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-select
+              v-model="form.gender"
+              :error-messages="errors.gender"
+              :items="gender"
+              label="Gender"
+              outlined
+            ></v-select>
+          </v-col>
 
-      <v-col cols="12" lg="6">
-        <v-select
-          v-model="form.school_id"
-          :error-messages="$page.errors"
-          :items="gender"
-          label="School"
-          outlined
-        ></v-select>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.entrance_to_duty"
-          :error-messages="$page.errors"
-          label="Entrance To Duty"
-          outlined
-        ></v-text-field>
-      </v-col>
+          <v-col cols="12" lg="3">
+            <v-select
+              v-model="form.civil_status"
+              :error-messages="errors.civil_status"
+              :items="civil_status"
+              label="Civil Status"
+              outlined
+            ></v-select>
+          </v-col>
 
-      <v-col cols="12" lg="3">
-        <v-select
-          v-model="form.employment_status"
-          :error-messages="$page.errors"
-          :items="gender"
-          label="Employment Status"
-          outlined
-        ></v-select>
-      </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.birthday"
+              :error-messages="errors.birthday"
+              label="Birthday"
+              outlined
+            ></v-text-field>
+          </v-col>
 
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.position_id"
-          :error-messages="$page.errors"
-          label="Position"
-          outlined
-        ></v-text-field>
-      </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.email"
+              :error-messages="errors.email"
+              label="Email Address"
+              outlined
+            ></v-text-field>
+          </v-col>
 
-      <v-col cols="12" lg="3">
-        <v-text-field
-          v-model="form.email"
-          :error-messages="$page.errors"
-          label="Email Address"
-          outlined
-        ></v-text-field>
-      </v-col>
-    </v-row>
-  </v-form>
+          <v-col cols="12" lg="6">
+            <v-select
+              v-model="form.school_id"
+              :error-messages="errors.school_id"
+              :items="schools"
+              item-text="name"
+              item-value="id"
+              label="School"
+              outlined
+            ></v-select>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.entrance_to_duty"
+              :error-messages="errors.entrance_to_duty"
+              label="Entrance To Duty"
+              outlined
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12" lg="3">
+            <v-select
+              v-model="form.employment_status"
+              :error-messages="errors.employment_status"
+              :items="emp_status"
+              label="Employment Status"
+              outlined
+            ></v-select>
+          </v-col>
+
+          <v-col cols="12" lg="6">
+            <v-select
+              v-model="form.position_id"
+              :items="positions"
+              item-text="name"
+              item-value="id"
+              :error-messages="errors.position_id"
+              label="Position"
+              outlined
+            ></v-select>
+          </v-col>
+
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.tin"
+              :error-messages="errors.tin"
+              label="TIN"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-text-field
+              v-model="form.gsis_no"
+              :error-messages="errors.gsis_no"
+              label="GSIS NO"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-col>
+
+    <v-col cols="12">
+      <v-btn :loading="sending" color="primary" @click="submit"
+        >Save Employee</v-btn
+      >
+    </v-col>
+  </v-row>
 </template>
+
 
 <script>
 export default {
-  name: "EmployeesForm",
+  name: "EmployeeForm",
+
+      mounted() {
+            console.log('Component mounted.')
+        },
 
   props: {
     form: Object,
-    errors: Object,
+    parent_error: Object,
   },
 
   data() {
@@ -131,7 +163,7 @@ export default {
         { value: "m", text: "Male" },
         { value: "f", text: "Female" },
       ],
-    };
+    }
   },
 };
 </script>

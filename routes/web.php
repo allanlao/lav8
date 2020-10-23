@@ -24,6 +24,7 @@ Route::get('/', [DashboardController::class, 'index']);
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');;
 Route::get('/employees/create', [EmployeeController::class, 'create']);
 Route::post('/employees/store', [EmployeeController::class, 'store']);
+Route::put('/employees/{id}', [EmployeeController::class, 'update']);
 //Employee
 //Route::get('/employees', [EmployeeController::class, 'create']);
 

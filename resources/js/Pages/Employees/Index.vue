@@ -18,7 +18,34 @@
         :headers="headers"
         :items="data"
         :search="search"
-      ></v-data-table>
+      >
+         <template v-slot:item.actions="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        small
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn
+        color="primary"
+        @click="initialize"
+      >
+        Reset
+      </v-btn>
+    </template>
+      
+      </v-data-table>
+
+
     </v-col>
   </v-row>
 </template>
@@ -36,6 +63,7 @@ export default {
   },
 
   data: (vm) => ({
+    editedIndex: -1,
     search: "",
     headers: [
       { text: "ID", value: "id" },
@@ -43,7 +71,7 @@ export default {
       { text: "School", value: "school.name" },
 
       { text: "Postion", value: "position.name" },
-      { text: "", sortable: false },
+      { text: 'Actions', value: 'actions', sortable: false },
     ],
   }),
 
@@ -62,9 +90,15 @@ export default {
         }
       );
     },
-    edit(_organisation) {
-      this.$inertia.visit(route("organizations.edit", _organisation));
-    },
+  
+
+     editItem (item) {
+      //  this.editedIndex = this.data.indexOf(item)
+        console.log("edited item" + item.id); 
+      //   this.$inertia.visit();
+          this.$inertia.put("/employees/" + item.id);
+     
+      },
   },
 };
 </script>
