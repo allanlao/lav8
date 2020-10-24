@@ -6,7 +6,11 @@
           <v-col cols="12" lg="3">
             <v-text-field
               v-model="form.id"
+<<<<<<< HEAD
               :error-messages="$pages.errors.id"
+=======
+              :error-messages="parent_error.idw"
+>>>>>>> 06560cabf0de85a79b231be4f65e8c15b5f0385f
               label="Employee Number"
               outlined
             ></v-text-field>
@@ -143,10 +147,16 @@
   </v-row>
 </template>
 
+
 <script>
 export default {
-  name: "EmployeesForm",
+  name: "EmployeeForm",
 
+      mounted() {
+            console.log('Component mounted.')
+        },
+
+<<<<<<< HEAD
   
  props: {
       form: Object,
@@ -154,6 +164,11 @@ export default {
     errors: Object,
     positions: Array,
     schools: Array,
+=======
+  props: {
+    form: Object,
+    parent_error: Object,
+>>>>>>> 06560cabf0de85a79b231be4f65e8c15b5f0385f
   },
   data() {
     return {
@@ -171,7 +186,7 @@ export default {
         { value: "single", text: "Single" },
         { value: "widowed", text: "Widowed" },
       ],
-    };
+    }
   },
 };
 </script>

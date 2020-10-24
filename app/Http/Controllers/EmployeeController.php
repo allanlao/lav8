@@ -69,5 +69,15 @@ class EmployeeController extends Controller
 
             return redirect()->route('employees');
     }
+
+
+    public function update($id){
+        
+         echo "edit called" . $id;
+
+      //   return Inertia::render('Employees/Edit',
+
+      //   );
+    }
 }
 
