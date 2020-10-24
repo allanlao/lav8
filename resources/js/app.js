@@ -35,7 +35,10 @@ const options = {
 const el = document.getElementById('app')
 
 new Vue({
-  vuetify: new Vuetify(options),
+  //vuetify: new Vuetify(options),
+  vuetify: new Vuetify({
+    theme: { dark: false },
+  }),
   render: h => h(App, {
     props: {
       initialPage: JSON.parse(el.dataset.page),
