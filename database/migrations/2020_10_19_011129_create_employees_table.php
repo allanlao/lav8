@@ -14,7 +14,7 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string('id')->index();;
+            $table->string('id',50)->index();;
           
             $table->string('firstname', 50);
             $table->string('middlename', 50)->nullable();
@@ -38,10 +38,12 @@ class CreateEmployeesTable extends Migration
             $table->enum('employment_status', ['probationary', 'regular', 'permanent', 'resigned', 'terminated'])->default('probationary');
          
             $table->enum('is_active', ['Y', 'N'])->default('Y');
-            $table->timestamps('deleted_at');
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->foreign('position_id')->references('id')->on('positions');
+          
+            $table->primary('id');
         });
     }
 

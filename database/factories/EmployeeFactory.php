@@ -1,0 +1,39 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Employee;
+use App\Models\Position;
+use App\Models\School;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class EmployeeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Employee::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'id'=> $this->faker->unique()->randomNumber(5),
+            'firstname'=> $this->faker->firstname,
+            'middlename'=> $this->faker->lastname,
+            'lastname'=> $this->faker->lastname,
+            'gender'=> $this->faker->randomElement(['male','female']),
+            'civil_status'=> $this->faker->randomElement(['single','married','divorced','widowed']),
+            'employment_status'=> $this->faker->randomElement(['probationary','regular','permanent','resigned','terminated']),
+            'email' => $this->faker->unique()->safeEmail,
+            'position_id' => Position::factory(),
+            'school_id' => School::factory(),
+        ];
+    }
+}

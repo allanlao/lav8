@@ -9,6 +9,7 @@
               :error-messages="errors.id"
               label="Employee Number"
               outlined
+              readonly
             ></v-text-field>
           </v-col>
           <v-col cols="12" lg="3">
@@ -137,7 +138,7 @@
 
     <v-col cols="12">
       <v-btn :loading="sending" color="primary" @click="submit"
-        >Save Employee</v-btn
+        >Update Employee</v-btn
       >
     </v-col>
   </v-row>
@@ -161,26 +162,13 @@ export default {
     errors: Object,
     positions: Array,
     schools: Array,
+    employee: Object,
   },
 
   data() {
     return {
       sending: false,
-      form: {
-        id: null,
-        firstname: null,
-        lastname: null,
-        middlename: null,
-        school_id: null,
-        entrance_to_duty: null,
-        gsis_no: null,
-        tin: null,
-        email: null,
-        employment_status: null,
-        mobile: null,
-        gender: null,
-        birthday: null,
-      },
+      form : this.employee,
       gender: [
         { value: "male", text: "Male" },
         { value: "female", text: "Female" },
@@ -200,7 +188,7 @@ export default {
 
   methods: {
     submit() {
-      this.$inertia.get("/employees/store", this.form);
+      this.$inertia.post("/employees/store", this.form);
     },
   },
 };

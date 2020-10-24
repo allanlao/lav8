@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeeController; 
+use App\Http\Controllers\LeaveCreditController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,19 @@ use App\Http\Controllers\EmployeeController;
 Route::get('/', [DashboardController::class, 'index']);
 
 //Employee
-Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');;
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
 Route::get('/employees/create', [EmployeeController::class, 'create']);
 Route::post('/employees/store', [EmployeeController::class, 'store']);
-Route::put('/employees/{id}', [EmployeeController::class, 'update']);
-//Employee
-//Route::get('/employees', [EmployeeController::class, 'create']);
+Route::get('/employees/{id}', [EmployeeController::class, 'update']);
+Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
+
+
+//Leave Credit
+
+Route::get('/credit', [LeaveCreditController::class, 'index']);
+
+
+
 
 Auth::routes();
 

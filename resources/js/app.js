@@ -5,10 +5,12 @@ import colors from 'vuetify/lib/util/colors'
 import Vue from 'vue'
 import Vuetify from 'vuetify';
 
+
 require('@/plugins/registerComponents')
 
 Vue.use(Vuetify);
 Vue.use(plugin)
+
 
 
 const options = {

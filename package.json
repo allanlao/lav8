@@ -34,6 +34,7 @@
         "@inertiajs/inertia": "^0.4.3",
         "@inertiajs/inertia-vue": "^0.3.2",
         "babel-polyfill": "^6.26.0",
-        "vuetify": "^2.3.14"
+        "vuetify": "^2.3.14",
+        "vuetify-dialog": "^2.0.12"
     }
 }

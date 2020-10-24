@@ -11,6 +11,7 @@ class Employee extends Model
 
     protected $appends = ['full_name'];
 
+
     protected $fillable = [
         'id',
         'firstname',

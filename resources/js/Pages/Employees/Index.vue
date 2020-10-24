@@ -10,42 +10,18 @@
       ></v-text-field>
     </v-col>
     <v-col cols="4" offset="4" align-self="center">
-      <v-btn @click="create" color="primary">Create Organization</v-btn>
+      <v-btn @click="create" color="primary">Create Employee</v-btn>
     </v-col>
 
     <v-col cols="12">
-      <v-data-table
-        :headers="headers"
-        :items="data"
-        :search="search"
-      >
-         <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        mdi-delete
-      </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
-      
+      <v-data-table :headers="headers" :items="data" :search="search">
+        <template v-slot:item.actions="{ item }">
+          <v-icon small class="mr-2" @click="editItem(item)">
+            mdi-pencil
+          </v-icon>
+          <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        </template>
       </v-data-table>
-
-
     </v-col>
   </v-row>
 </template>
@@ -71,34 +47,26 @@ export default {
       { text: "School", value: "school.name" },
 
       { text: "Postion", value: "position.name" },
-      { text: 'Actions', value: 'actions', sortable: false },
+      { text: "Actions", value: "actions", sortable: false },
     ],
   }),
 
   methods: {
     create() {
-      this.$inertia.get(
-        "/employees/create",
-        {
-          name: "John Doe",
-          email: "john.doe@example.com",
-        },
-        {
-          onSuccess: () => {
-            // Handle success event
-          },
-        }
-      );
+      this.$inertia.get("/employees/create");
     },
-  
 
-     editItem (item) {
-      //  this.editedIndex = this.data.indexOf(item)
-        console.log("edited item" + item.id); 
-      //   this.$inertia.visit();
-          this.$inertia.put("/employees/" + item.id);
+    editItem(item) {
+      this.$inertia.get("/employees/" + item.id);
+    },
+
+     deleteItem(item) {
      
-      },
+
+      if (confirm("Are you sure you want to delete this employee?")) {
+       this.$inertia.get("/employees/delete/" + item.id);
+      }
+    },
   },
 };
 </script>

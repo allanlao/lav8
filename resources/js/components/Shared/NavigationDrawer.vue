@@ -15,14 +15,7 @@
         <v-list-item
           link
           @click="
-            $inertia.get('/',  {
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-              }, {
-              onSuccess: () => {
-                // Handle success event
-              },
-            })
+          $inertia.get('/') 
           "
         >
           <v-list-item-icon>
@@ -36,15 +29,7 @@
         <v-list-item
           link
             @click="
-            $inertia.get('/employees',  {
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-              }, {
-              onSuccess: () => {
-                // Handle success event
-              },
-            })
-          "
+            $inertia.get('/employees') "
         >
           <v-list-item-icon>
             <v-icon>business</v-icon>
@@ -54,17 +39,24 @@
           </v-list-item-content>
         </v-list-item>
 
+
+              <v-list-item
+          link
+            @click="
+            $inertia.get('/credit') "
+        >
+          <v-list-item-icon>
+            <v-icon>business</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> Leave Credits </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item
           link
             @click="
-            $inertia.get('/',  {
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-              }, {
-              onSuccess: () => {
-                // Handle success event
-              },
-            })
+             $inertia.get('/')
           "
         >
           <v-list-item-icon>
@@ -78,14 +70,7 @@
         <v-list-item
           link
             @click="
-            $inertia.get('/',  {
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-              }, {
-              onSuccess: () => {
-                // Handle success event
-              },
-            })
+            $inertia.get('/')
           "
         >
           <v-list-item-icon>
@@ -99,14 +84,7 @@
         <v-list-item
           link
           @click="
-            $inertia.get('/',  {
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-              }, {
-              onSuccess: () => {
-                // Handle success event
-              },
-            })
+            $inertia.get('/')
           "
 
         >

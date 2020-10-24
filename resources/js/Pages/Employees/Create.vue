@@ -178,7 +178,7 @@ export default {
         email: null,
         employment_status: null,
         mobile: null,
-        gender: null,
+        gender: "male",
         birthday: null,
       },
       gender: [
@@ -200,7 +200,7 @@ export default {
 
   methods: {
     submit() {
-      this.$inertia.get("/employees/store", this.form);
+      this.$inertia.post("/employees/store", this.form);
     },
   },
 };
