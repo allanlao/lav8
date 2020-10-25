@@ -31,7 +31,8 @@ Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 //Leave Credit
 
-Route::get('/credit', [LeaveCreditController::class, 'index']);
+Route::post('/credit', [LeaveCreditController::class, 'index']);
+Route::post('/credit/store', [LeaveCreditController::class, 'store']);
 
 
 

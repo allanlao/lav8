@@ -32,8 +32,9 @@ class EmployeeFactory extends Factory
             'civil_status'=> $this->faker->randomElement(['single','married','divorced','widowed']),
             'employment_status'=> $this->faker->randomElement(['probationary','regular','permanent','resigned','terminated']),
             'email' => $this->faker->unique()->safeEmail,
-            'position_id' => Position::factory(),
-            'school_id' => School::factory(),
+            'position_id' => Position::all(['id'])->random(),
+            'school_id' =>  School::all(['id'])->random(),
+            
         ];
     }
 }

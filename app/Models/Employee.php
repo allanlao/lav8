@@ -54,11 +54,11 @@ class Employee extends Model
 
         public function position()
         {
-            return $this->belongsTo(Position::class);
+            return $this->belongsTo('App\Models\Position');
         }
 
         public function school()
         {
-            return $this->belongsTo(School::class);
+            return $this->belongsTo('App\Models\School');
         }
 }

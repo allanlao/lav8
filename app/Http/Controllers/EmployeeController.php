@@ -17,10 +17,13 @@ class EmployeeController extends Controller
     {
     
 
-        $data = Employee::select('id', 'firstname', 'lastname', 'school_id', 'position_id', 'firstname')
-            ->with(['school', 'position'])->get();
+      //  $data = Employee::select('id', 'firstname', 'lastname', 'school_id', 'position_id', 'firstname')
+       //     ->with(['school', 'position'])->get();
 
-        //  dd($data);
+   
+       $data = Employee::select('id', 'firstname', 'lastname', 'school_id', 'position_id', 'firstname')
+          ->with(['school', 'position'])->get();
+
         return Inertia::render('Employees/Index', ['data' => $data]);
     }
 

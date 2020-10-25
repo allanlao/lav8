@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use App\Models\School;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
-use App\Models\Employee;
-use App\Models\LeaveCredit;
-use App\Models\School;
+use Illuminate\Support\Arr;
 
 class LeaveCreditController extends Controller
 {
@@ -16,17 +15,35 @@ class LeaveCreditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {  
-        $schools = School::all();  
+    public function index(Request $request)
+    {
+
+        $employees = Employee::with('school');
+
+        if ($request->filter != 1) {
+
+            $school_id = $request->school;
+            $lastname = $request->lastname;
+
+            $employees = $employees->where('lastname', 'like', $lastname.'%')
+
+                ->when($school_id != 'Any', function ($q) use ($school_id) {
+                    return $q->where('school_id', $school_id);
+                });
+
+        }
+
+        $employees = $employees->get();
+
+        $schools = School::all();
         $data = "";
 
-        $employees = Employee::all();
         return Inertia::render('LeaveCredits/Index',
-         ['data' => $data,
-          'schools'=> $schools,
-          'employees'=>$employees]);
-        
+            ['data' => $data,
+                'schools' => $schools,
+                'employees' => $employees,
+            ]);
+
     }
 
     /**
@@ -48,6 +65,37 @@ class LeaveCreditController extends Controller
     public function store(Request $request)
     {
         //
+
+        $employees = $request->selected;
+        $form = $request->form;
+
+
+
+        /*$validatedData = $request->validate([
+
+            'year' => 'required|year',
+            'month' => 'required|month',
+            'credit' => 'required',
+         
+        ]);*/
+
+
+
+
+
+
+        $employees = Arr::pluck( $employees,'id');
+
+        print_r( $form);
+
+        echo $form['credit'] . "sdfdsfdsfds";
+
+        foreach($employees as $employee)
+        {
+         // print_r($employee);
+         // echo $employee . "\n";
+        }
+        echo "stored";
     }
 
     /**

@@ -43,7 +43,7 @@
               <v-list-item
           link
             @click="
-            $inertia.get('/credit') "
+            $inertia.post('/credit/',{filter:1})"
         >
           <v-list-item-icon>
             <v-icon>business</v-icon>

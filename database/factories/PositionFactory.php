@@ -23,7 +23,7 @@ class PositionFactory extends Factory
     {
         return [
             //
-            'name'=> $this->faker->jobTitle(5),
+            'name'=> $this->faker->unique()->jobTitle(5),
         ];
     }
 }
