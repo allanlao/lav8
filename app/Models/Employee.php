@@ -11,6 +11,8 @@ class Employee extends Model
 
     protected $appends = ['full_name'];
 
+    public $incrementing = false;
+
 
     protected $fillable = [
         'id',
@@ -60,5 +62,10 @@ class Employee extends Model
         public function school()
         {
             return $this->belongsTo('App\Models\School');
+        }
+
+        public function credits()
+        {
+            return $this->hasMany('App\Models\LeaveCredit');
         }
 }

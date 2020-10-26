@@ -3,7 +3,7 @@
     <v-app-bar flat color="#303030">
       <v-row align="center" justify="center">
         <v-col cols="12" class="text-center pt-6">
-          <inertia-link href="/dashboard"> LOGO </inertia-link>
+         <logo></logo>
         </v-col>
       </v-row>
     </v-app-bar>

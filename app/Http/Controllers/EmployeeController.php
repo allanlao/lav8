@@ -64,7 +64,7 @@ class EmployeeController extends Controller
 
         Employee::updateOrCreate(['id'=>$request->id],$validatedData);
 
-        return redirect()->route('employees');
+        return redirect()->route('employees')->with('success', 'Employee updated.');
     }
 
     public function update($id)

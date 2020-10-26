@@ -26,7 +26,7 @@
     <v-col cols="12" align-self="center">
       <v-card tile outlined>
         <v-card-title>
-          <v-col cols="3" align-self="center">
+          <v-col cols="2" align-self="center">
             <v-select
               v-model="form.year"
               :items="years"
@@ -35,7 +35,7 @@
               outlined
             ></v-select>
           </v-col>
-          <v-col cols="3" align-self="center">
+          <v-col cols="2" align-self="center">
             <v-select
               v-model="form.month"
               :items="months"
@@ -44,13 +44,22 @@
               outlined
             ></v-select>
           </v-col>
-          <v-col cols="3" align-self="center">
+          <v-col cols="2" align-self="center">
             <v-text-field
               v-model="form.credit"
               label="Credit Amount"
               hide-details
               outlined
               type="number"
+            ></v-text-field>
+          </v-col>
+            <v-col cols="3" align-self="center">
+            <v-text-field
+              v-model="form.remarks"
+              label="Remarks"
+              hide-details
+              outlined
+              
             ></v-text-field>
           </v-col>
 
@@ -114,8 +123,9 @@ export default {
 
       form: {
         year: new Date().getFullYear(),
-        month: this.currentMonth,
+        month: null,
         credit: 1.5,
+        remarks:null,
       },
       headers: [
         { text: "ID", value: "id" },

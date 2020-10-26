@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\School;
+use App\Models\LeaveCredit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class LeaveCreditController extends Controller
 {
@@ -80,23 +82,34 @@ class LeaveCreditController extends Controller
         ]);*/
 
 
-
-
-
-
         $employees = Arr::pluck( $employees,'id');
 
-        print_r( $form);
+     
+    
+        $sql_values = null;
 
-        echo $form['credit'] . "sdfdsfdsfds";
 
+       $id = $form['year'] . "-" . date('m',strtotime($form['month']));
+       
+      
         foreach($employees as $employee)
         {
-         // print_r($employee);
-         // echo $employee . "\n";
+
+            $model = new LeaveCredit();
+            $model->id = $id . "-" .  $employee;
+            $model->employee_id = $employee;
+            $model->credit = $form['credit'];
+            $model->balance = 0;
+            $model->remarks = $form['remarks'];
+
+                     
+            $sql_values .= $this->prepareLeaveModel($model);
+            $this->insertLeaveCredits( $sql_values);
         }
-        echo "stored";
-    }
+        return redirect()->route('credit');
+
+      
+         }
 
     /**
      * Display the specified resource.
@@ -141,5 +154,35 @@ class LeaveCreditController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    
+    private function prepareLeaveModel($model){
+        $v[0] =  "'" . $model->id . "'";
+        $v[1] =  "'" . $model->employee_id . "'";
+        $v[2] =  $model->credit;
+        $v[3] =  $model->balance;
+        $v[4] =   "'" . $model->remarks . "'";
+
+      
+        $raw_value = implode(",", $v);
+
+    
+
+        return ',(' . $raw_value . ')';
+
+    }
+
+
+    private function insertLeaveCredits($sql_values){
+        if (!empty($sql_values)) {
+            $sql_values = substr($sql_values, 1);
+            $sql = 'replace INTO leave_mc (id,
+            employee_id,credit,balance,remarks )
+             VALUES ' . $sql_values;
+         
+            return DB::statement($sql);
+        }
     }
 }
