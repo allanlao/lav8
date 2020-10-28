@@ -68,4 +68,9 @@ class Employee extends Model
         {
             return $this->hasMany('App\Models\LeaveCredit');
         }
+
+        public function cocs()
+        {
+            return $this->hasMany('App\Models\LeaveCoc');
+        }
 }

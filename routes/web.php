@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeeController; 
 use App\Http\Controllers\LeaveCreditController;
+use App\Http\Controllers\LeaveCocController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,11 @@ Route::get('/credit', [LeaveCreditController::class, 'index'])->name('credit');
 Route::post('/credit/store', [LeaveCreditController::class, 'store']);
 
 
+//Leave Coc
+
+Route::get('/cocs/{id}', [LeaveCocController::class, 'index']);
+Route::post('/cocs/store', [LeaveCocController::class, 'store']);
+Route::get('/cocs/create/{id}', [LeaveCocController::class, 'create']);
 
 
 Auth::routes();
