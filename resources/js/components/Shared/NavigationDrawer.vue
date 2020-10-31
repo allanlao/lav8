@@ -30,22 +30,30 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="$inertia.post('/credit/', { filter: 1 })">
+        <v-list-item link @click="$inertia.get('/employees/')">
           <v-list-item-icon>
             <v-icon>business</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title> Leave Credits </v-list-item-title>
+            <v-list-item-title> View Leave Credits </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
-
-          <v-list-item link @click="$inertia.get('/employees')">
+        <v-list-item link @click="$inertia.post('/credits/grp', { filter: 1 })">
           <v-list-item-icon>
             <v-icon>business</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title> Leave COC </v-list-item-title>
+            <v-list-item-title> Leave Credits by Group </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link @click="$inertia.get('/employees')">
+          <v-list-item-icon>
+            <v-icon>business</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> Add COC/CTO </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 

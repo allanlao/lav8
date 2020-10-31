@@ -1,174 +1,155 @@
 <template>
-  <v-row>
-    <v-col cols="3" align-self="center">
+  <v-row >
+        <v-col cols="12" >
+ 
+       <v-row>
+    <v-col cols="2" align-self="center">
+      <v-menu
+        :close-on-content-click="false"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on, period }">
+          <v-text-field
+            v-model="form.period"
+           :error-messages="errors.period"
+            label="Period"
+            outlined
+            readonly
+        
+            v-bind="period"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="form.period"
+          no-title
+          type="month"
+          @input="menu1 = false"
+        ></v-date-picker>
+      </v-menu>
+    </v-col>
+
+    <v-col cols="2" align-self="center">
       <v-select
-        v-model="filter.school"
-        :items="any_schools"
-        item-text="name"
-        item-value="id"
-        label="School"
-        hide-details
+        v-model="form.leave_type"
+        :error-messages="errors.leave_type"
+      
+        :items="leave_type"
+        label="Leave Type"
         outlined
       ></v-select>
+
     </v-col>
-    <v-col cols="3" align-self="center">
+
+    <v-col cols="2" align-self="center">
       <v-text-field
-        v-model="filter.lastname"
-        label="Lastname"
-        hide-details
+        v-model="form.credit"
+        :error-messages="errors.credit"
+        label="Credit Amount"
+     
         outlined
+        type="number"
       ></v-text-field>
     </v-col>
     <v-col cols="3" align-self="center">
-      <v-btn large color="primary" @click="search">Search</v-btn>
+      <v-text-field
+        v-model="form.remarks"
+       :error-messages="errors.remarks"
+        label="Remarks"
+   
+        outlined
+      ></v-text-field>
     </v-col>
 
-    <v-col cols="12" align-self="center">
-      <v-card tile outlined>
-        <v-card-title>
-          <v-col cols="2" align-self="center">
-            <v-select
-              v-model="form.year"
-              :items="years"
-              label="Year"
-              hide-details
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="2" align-self="center">
-            <v-select
-              v-model="form.month"
-              :items="months"
-               label="Month"
-              hide-details
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="2" align-self="center">
-            <v-text-field
-              v-model="form.credit"
-              label="Credit Amount"
-              hide-details
-              outlined
-              type="number"
-            ></v-text-field>
-          </v-col>
-            <v-col cols="3" align-self="center">
-            <v-text-field
-              v-model="form.remarks"
-              label="Remarks"
-              hide-details
-              outlined
-              
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="3" align-self="center">
-            <v-btn large color="primary" @click="submit"
-              >Add Leave Credit</v-btn
-            >
-          </v-col>
-        </v-card-title>
-
-        <v-data-table
-          v-model="selected"
-          :headers="headers"
-          :items="employees"
-          item-key="id"
-          sort-by="name"
-          group-by="school.name"
-          class="elevation-1"
-          show-group-by
-          show-select
-        >
-        </v-data-table>
-      </v-card>
+    <v-col cols="2">
+      <v-btn large color="primary" 
+      @click="submit"
+      
+      >Add Leave Credit</v-btn>
+    </v-col>
+</v-row>
+    
+      </v-col>
+    <v-col cols="12">
+      <v-data-table :headers="headers" :items="data" :search="search">
+        <template v-slot:item.actions="{ item }">
+          <v-icon small class="mr-2" @click="editItem(item)">
+            mdi-pencil
+          </v-icon>
+          <v-icon small primary @click="deleteItem(item)"> mdi-delete </v-icon>
+        </template>
+      </v-data-table>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import Layout from "@shared/Layout";
+
 export default {
-  metaInfo: { title: "Employees" },
+  metaInfo: { title: "Leave Credits" },
 
   layout: (h, page) => h(Layout, [page]),
 
   props: {
-    schools: Array,
-    divisions: Array,
-    employees: Array,
+    data: Array,
+    id: null,
+    errors: Object,
+    flash:Object,
   },
 
-  data() {
-    return {
-      selected: [],
-      years: [new Date().getFullYear(), new Date().getFullYear() + 1],
-      months: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ],
+  data: (vm) => ({
+    editedIndex: -1,
+    search: "",
 
-      filter: { school: "Any", lastname: "" },
-
-      form: {
-        year: new Date().getFullYear(),
-        month: null,
-        credit: 1.5,
-        remarks:null,
-      },
-      headers: [
-        { text: "ID", value: "id" },
-        { text: "Name", value: "full_name" },
-        { text: "School", value: "school.name" },
-        { text: "Division", value: "school.division" },
-      ],
-    };
-  },
-
-  computed: {
-    any_divisions: function () {
-      this.divisions.unshift("Any");
-      return this.divisions;
+    form: {
+      period: null,
+      employee_id: null,
+      credit: 1.25,
+      remarks: null,
+      leave_type: null,
     },
 
-    any_schools: function () {
-      this.schools.unshift("Any");
-      return this.schools;
-    },
+    headers: [
+      { text: "Period", value: "period" },
+      { text: "Type", value: "type" },
+      { text: "Credit", value: "credit" },
+      { text: "Remarks", value: "remarks" },
+    ],
 
-     currentMonth: function(){
-         const d = new Date();
-         console.log(this.months[d.getMonth()]);
-         return "April"
-     },
-    // years: function(){
-
-    //   return new Date().getFullYear();
-
-    //  },
-  },
+    leave_type: [
+      { value: "vl", text: "Vacation Leave" },
+      { value: "sl", text: "Sick Leave" },
+    ],
+  }),
 
   methods: {
-    search() {
-      this.$inertia.post("/credit", this.filter);
+    create(item) {
+      this.$inertia.get("/credits/create/" + this.id);
+    },
+
+    editItem(item) {
+      this.$inertia.get("/employees/" + item.id);
+    },
+
+    viewCoc(item) {
+      this.$inertia.get("/cocs/" + item.id);
+    },
+
+    deleteItem(item) {
+      if (confirm("Are you sure you want to delete this employee?")) {
+        this.$inertia.get("/employees/delete/" + item.id);
+      }
     },
 
     submit() {
-      this.$inertia.post("/credit/store", {
-        selected: this.selected,
-        form: this.form,
-      });
+
+      this.form.employee_id = this.id;
+      this.$inertia.post("/credits/storeOne", 
+        this.form,
+      );
     },
   },
 };

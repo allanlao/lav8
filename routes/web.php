@@ -32,16 +32,17 @@ Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 //Leave Credit
 
-Route::post('/credit', [LeaveCreditController::class, 'index']);
-Route::get('/credit', [LeaveCreditController::class, 'index'])->name('credit');
-Route::post('/credit/store', [LeaveCreditController::class, 'store']);
+Route::get('/credits/{id}', [LeaveCreditController::class, 'index'])->name('credits-index');
+Route::post('/credits/grp', [LeaveCreditController::class, 'createByGroup'])->name('credit-grp');
+Route::post('/credits/storeMany', [LeaveCreditController::class, 'storeMany']);
+Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
 
 //Leave Coc
 
 Route::get('/cocs/{id}', [LeaveCocController::class, 'index']);
 Route::post('/cocs/store', [LeaveCocController::class, 'store']);
-Route::get('/cocs/create/{id}', [LeaveCocController::class, 'create']);
+Route::get('/cocs/create/{id}', [LeaveCocController::class, 'create'])->name('create_coc');
 
 
 Auth::routes();

@@ -7,12 +7,13 @@
       type="info"
       elevation="2"
     >
-      Vestibulum ullamcorper mauris at ligula. Nam pretium turpis et arcu. Ut varius tincidunt libero. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Morbi nec metus.
+    When creating a CTO, the Hours Earned should be negative to reflect a deduction in the number of COC credits.
+    Also a mistake in COC entry should be countered with a debit entry for COC.
     </v-alert>
      </v-col>
     <v-col cols="12">
       <v-form ref="form">
-        <v-row>
+        <v-row >
           <v-col cols="12" lg="3">
             <v-text-field
               v-model="form.employee_id"
@@ -20,6 +21,7 @@
               label="Employee ID"
               outlined
               readonly
+              dense
             ></v-text-field>
           </v-col>
 
@@ -29,6 +31,7 @@
               :error-messages="errors.description"
               label="Description / Event"
               outlined
+              dense
             ></v-text-field>
           </v-col>
           <v-col cols="12" lg="3">
@@ -38,6 +41,7 @@
               :items="osr_type"
               label="Type"
               outlined
+              dense
             ></v-select>
           </v-col>
 
@@ -54,11 +58,12 @@
                   :error-messages="errors.date_issued"
                   label="Date Issued / Approved"
                   outlined
+                  dense
                   readonly
                   hint="Date Issued for COC, Date Approved for CTO"
                   prepend-icon="mdi-calendar"
                   v-bind="date_issued"
-                  @blur="date = parseDate(dateFormatted)"
+                
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -83,10 +88,11 @@
                   :error-messages="errors.osr_from"
                   label="Start Date"
                   outlined
+                  dense
                   readonly
                   prepend-icon="mdi-calendar"
                   v-bind="from_date"
-                  @blur="date = parseDate(dateFormatted)"
+                
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -111,10 +117,11 @@
                   :error-messages="errors.osr_to"
                   label="End Date"
                   outlined
+                  dense
                   readonly
                   prepend-icon="mdi-calendar"
                   v-bind="end_date"
-                  @blur="date = parseDate(dateFormatted)"
+               
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -131,9 +138,11 @@
               :error-messages="errors.hours"
               label="Hours Earned/ Hours Used"
               outlined
+              dense
               hint="If COC then enter hours earned, if CTO then Hours Used"
             ></v-text-field>
           </v-col>
+
         </v-row>
       </v-form>
     </v-col>
@@ -143,6 +152,20 @@
         >Save COC/CTO</v-btn
       >
     </v-col>
+
+
+        <v-col cols="12">
+      <v-data-table :headers="headers" :items="data" >
+        <template v-slot:item.actions="{ item }">
+          <v-icon small class="mr-2" @click="editItem(item)">
+            mdi-pencil
+          </v-icon>
+          <v-icon small primary @click="deleteItem(item)"> mdi-delete </v-icon>
+          
+        </template>
+      </v-data-table>
+    </v-col>
+  </v-row>
   </v-row>
 </template>
 
@@ -164,6 +187,7 @@ export default {
   props: {
     id: null,
     errors: Object,
+    data: Array,
   },
 
   data() {
@@ -183,12 +207,24 @@ export default {
         { value: "coc", text: "COC" },
         { value: "cto", text: "CTO" },
       ],
+
+      headers: [
+        { text: "Date Issued", value: "date_issued" },
+        { text: "Description", value: "description" },
+        { text: "type", value: "type" },
+
+        { text: "Start Date", value: "osr_from" },
+        { text: "End Date", value: "osr_to", sortable: false },
+        { text: "Hours", value: "hours", sortable: false },
+        { text: "Balance", value: "balance", sortable: false },
+        { text: "Created", value: "created_at", sortable: false },
+      ],
     };
   },
 
   methods: {
     submit() {
-      this.$inertia.post("/employees/store", this.form);
+      this.$inertia.post("/cocs/store", this.form);
     },
   },
 };

@@ -20,8 +20,9 @@
             mdi-pencil
           </v-icon>
           <v-icon small primary @click="deleteItem(item)"> mdi-delete </v-icon>
+          <v-btn x-small color="primary" @click="viewCredit(item)"> <v-icon small > mdi-eye </v-icon>Leave Credits</v-btn>
           <v-btn x-small color="primary" @click="viewCoc(item)"> <v-icon small > mdi-eye </v-icon>COC</v-btn>
-         
+       
         </template>
       </v-data-table>
     </v-col>
@@ -62,8 +63,12 @@ export default {
       this.$inertia.get("/employees/" + item.id);
     },
 
-      viewCoc(item) {
+    viewCoc(item) {
       this.$inertia.get("/cocs/" + item.id);
+    },
+
+     viewCredit(item) {
+      this.$inertia.get("/credits/" + item.id);
     },
 
      deleteItem(item) {

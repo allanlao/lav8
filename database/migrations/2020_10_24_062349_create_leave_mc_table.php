@@ -14,15 +14,17 @@ class CreateLeaveMcTable extends Migration
     public function up()
     {
         Schema::create('leave_mc', function (Blueprint $table) {
-            $table->string('id',50);
+            $table->increments('id');
             $table->string('employee_id',50);
+            $table->date('period');
+            $table->enum('type',['vl','sl']);
             $table->decimal('credit',10,2);
             $table->decimal('balance',10,2);
-            $table->string('remarks',50);
+            $table->string('remarks',50)->nullable();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->primary('id');
+          
         });
     }
 

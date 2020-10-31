@@ -2,15 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
-use App\Models\School;
 use App\Models\LeaveCoc;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-
-
 
 class LeaveCocController extends Controller
 {
@@ -22,12 +16,9 @@ class LeaveCocController extends Controller
     public function index($id)
     {
 
+        $data = LeaveCoc::where('employee_id', $id)->get();
 
-        
-       $data =  LeaveCoc::where('employee_id',$id)->get();
-         
-        
-        return Inertia::render('LeaveCocs/Index',['data'=>$data ,'id'=>$id]);
+        return Inertia::render('LeaveCocs/Index', ['data' => $data, 'id' => $id]);
 
     }
 
@@ -38,7 +29,9 @@ class LeaveCocController extends Controller
      */
     public function create($id)
     {
-        return Inertia::render('LeaveCocs/Create', ['id'=>$id]);
+
+       $data =  LeaveCoc::where('employee_id',$id)->get();
+        return Inertia::render('LeaveCocs/Create', ['id' => $id, 'data'=> $data]);
 
     }
 
@@ -50,7 +43,41 @@ class LeaveCocController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+
+            'employee_id' => 'required|max:50',
+            'description' => 'required|max:50',
+            'date_issued' => 'required|date',
+            'type' => 'required',
+            'osr_from' => 'date',
+            'osr_to' => 'date',
+            'hours' => 'required|numeric',
+
+        ]);
+
+
+
+        $row = LeaveCoc::latest('id')->first();
+
+        $lastBalance = 0;
+        if ($row != null) {
+            $lastBalance = $row->balance;
+        }
+
+        $coc = new LeaveCoc;
+        $coc->employee_id = $request->employee_id;
+        $coc->description = $request->description;
+        $coc->date_issued = $request->date_issued;
+        $coc->type = $request->type;
+        $coc->osr_from = $request->osr_from;
+        $coc->osr_to = $request->osr_to;
+        $coc->hours = $request->hours;
+        $coc->balance = $lastBalance + $request->hours;
+
+        $coc->save();
+
+        return redirect()->route('create_coc',['id'=> $request->employee_id])->with('success', 'COC updated.');
     }
 
     /**

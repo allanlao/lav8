@@ -10,7 +10,7 @@
       ></v-text-field>
     </v-col>
     <v-col cols="4" offset="4" align-self="center">
-      <v-btn @click="create(item)" color="primary">Create New COC</v-btn>
+      <v-btn @click="create(id)" color="primary">Create New COC</v-btn>
     </v-col>
 
     <v-col cols="12">

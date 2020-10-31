@@ -9,9 +9,12 @@ class LeaveCredit extends Model
 {
     use HasFactory;
 
+    
+    protected $table = 'leave_mc';
     protected $fillable = [
-         'id',
+         
          'employee_id',
+         'period',
          'credit',
          'balance',
          'remarks',
