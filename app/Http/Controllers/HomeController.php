@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Employee;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+     //   $this->middleware('auth');
     }
 
     /**
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $data = Employee::select('id', 'firstname', 'lastname', 'school_id', 'position_id', 'firstname')
+            ->with(['school', 'position'])->get();
+
+        return Inertia::render('Home/Index', ['data' => $data]);
     }
 }

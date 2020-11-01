@@ -23,6 +23,10 @@ use App\Http\Controllers\LeaveController;
 
 Route::get('/', [DashboardController::class, 'index']);
 
+//Home
+
+Route::get('/home', [HomeController::class, 'index']);
+
 //Employee
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
 Route::get('/employees/create', [EmployeeController::class, 'create']);
@@ -33,8 +37,8 @@ Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 //Leaves
 
-Route::resource('leaves',LeaveController::class);
-
+Route::resource('leaves',LeaveController::class)->except(['create']);
+Route::get('/leaves/create/{id}', [LeaveController::class, 'create']);
 
 
 //Leave Credit

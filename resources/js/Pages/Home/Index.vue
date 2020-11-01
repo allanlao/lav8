@@ -12,26 +12,19 @@
             outlined
           ></v-text-field>
         </v-col>
-        <v-col cols="3">
-          <v-btn @click="create" color="primary">Create Employee</v-btn>
-        </v-col>
+      
       </v-row>
 
       <v-row>
         <v-col>
           <v-data-table :headers="headers" :items="data" :search="search">
             <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="editItem(item)">
-                mdi-pencil
-              </v-icon>
-              <v-icon small primary @click="deleteItem(item)">
-                mdi-delete
-              </v-icon>
-              <v-btn x-small color="primary" @click="viewCredit(item)">
-                <v-icon small> mdi-eye </v-icon>Leave Credits</v-btn
+              
+              <v-btn  color="primary" @click="leaves(item)">
+                <v-icon > event_note </v-icon></v-btn
               >
-              <v-btn x-small color="primary" @click="viewCoc(item)">
-                <v-icon small> mdi-eye </v-icon>COC</v-btn
+              <v-btn  color="primary" @click="viewCoc(item)">
+                <v-icon > mdi-eye </v-icon>COC</v-btn
               >
             </template>
           </v-data-table>
@@ -72,8 +65,8 @@ export default {
       this.$inertia.get("/employees/create");
     },
 
-    editItem(item) {
-      this.$inertia.get("/employees/" + item.id);
+    leaves(item) {
+      this.$inertia.get("/leaves/create/" + item.id);
     },
 
     viewCoc(item) {

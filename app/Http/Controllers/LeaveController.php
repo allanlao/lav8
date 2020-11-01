@@ -30,11 +30,11 @@ class LeaveController extends Controller
      * show create form
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
 
-        $employees = Employee::with('school')->get();
-        return Inertia::render('Leaves/Create',['employees'=>$employees]);
+        $employee = Employee::with(['school','position'])->find($id);
+        return Inertia::render('Leaves/Create',['employee'=>$employee]);
 
     }
 

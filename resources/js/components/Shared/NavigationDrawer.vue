@@ -12,7 +12,7 @@
         :value="currentController"
         active-class="light-blue lighten-5 blue--text text--darken-4"
       >
-        <v-list-item link @click="$inertia.get('/')">
+        <v-list-item link @click="$inertia.get('/home')">
           <v-list-item-icon>
             <v-icon>house</v-icon>
           </v-list-item-icon>

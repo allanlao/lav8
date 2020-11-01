@@ -1,31 +1,29 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-card>
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="overline mb-4">OVERLINE</div>
-            <v-list-item-title class="headline mb-1">
-              {{ employee.full_name }}
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              {{ employee.position.name }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle>
-              {{ employee.school.name }}</v-list-item-subtitle
-            >
-          </v-list-item-content>
-
-          <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-        </v-list-item>
-      </v-card>
-    </v-col>
-
-    <v-col cols="12">
       <v-form ref="form">
         <v-card>
           <v-card-title> Test Title </v-card-title>
           <v-card-text>
+            <v-row>
+              <v-col cols="6">
+                <v-autocomplete
+                  v-model="form.employee_id"
+                  :error-messages="errors.employee_id"
+                  clearable
+                  outlined
+                  label="Employee Name"
+                  :items="employees"
+                  item-value="id"
+                  item-text="full_name"
+                >
+                  <template slot="item" slot-scope="{ item }">
+                    {{ item.full_name }} - {{ item.school.name }}
+                  </template>
+                </v-autocomplete>
+              </v-col>
+            </v-row>
+
             <v-row>
               <v-col cols="2">
                 <v-menu
@@ -198,7 +196,7 @@ export default {
   props: {
     errors: Object,
 
-    employee: Object,
+    employees: Array,
   },
 
   data() {
