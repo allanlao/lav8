@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeeController; 
 use App\Http\Controllers\LeaveCreditController;
 use App\Http\Controllers\LeaveCocController;
+use App\Http\Controllers\LeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,12 @@ Route::get('/employees/{id}', [EmployeeController::class, 'update']);
 Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 
+//Leaves
+
+Route::resource('leaves',LeaveController::class);
+
+
+
 //Leave Credit
 
 Route::get('/credits/{id}', [LeaveCreditController::class, 'index'])->name('credits-index');
@@ -46,5 +53,7 @@ Route::get('/cocs/create/{id}', [LeaveCocController::class, 'create'])->name('cr
 
 
 Auth::routes();
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -24,7 +24,7 @@ class CreateLeaveCocTable extends Migration
             $table->integer('hours');
             $table->integer('balance');
             $table->timestamps();
-
+            $table->string('encoded_by',50)->nullable();
             $table->foreign('employee_id')->references('id')->on('employees');
         });
     }

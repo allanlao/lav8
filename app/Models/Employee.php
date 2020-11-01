@@ -73,4 +73,8 @@ class Employee extends Model
         {
             return $this->hasMany('App\Models\LeaveCoc');
         }
+        public function leaves()
+        {
+            return $this->hasMany('App\Models\Leave ');
+        }
 }

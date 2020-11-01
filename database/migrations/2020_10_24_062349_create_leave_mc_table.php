@@ -22,7 +22,7 @@ class CreateLeaveMcTable extends Migration
             $table->decimal('balance',10,2);
             $table->string('remarks',50)->nullable();
             $table->timestamps();
-
+            $table->string('encoded_by',50)->nullable();
             $table->foreign('employee_id')->references('id')->on('employees');
           
         });

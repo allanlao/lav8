@@ -42,7 +42,7 @@ class CreateEmployeesTable extends Migration
             $table->timestamps();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->foreign('position_id')->references('id')->on('positions');
-          
+            $table->string('encoded_by',50)->nullable();
             $table->primary('id');
         });
     }

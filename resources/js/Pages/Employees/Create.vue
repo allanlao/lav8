@@ -2,143 +2,150 @@
   <v-row>
     <v-col cols="12">
       <v-form ref="form">
-        <v-row>
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.id"
-              :error-messages="errors.id"
-              label="Employee Number"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.firstname"
-              :error-messages="errors.firstname"
-              label="Firstname"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.middlename"
-              :error-messages="errors.middlename"
-              label="Middlename"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.lastname"
-              :error-messages="errors.lastname"
-              label="Lastname"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="3">
-            <v-select
-              v-model="form.gender"
-              :error-messages="errors.gender"
-              :items="gender"
-              label="Gender"
-              outlined
-            ></v-select>
-          </v-col>
+        <v-card outlined>
+          <v-card-title> Test Title </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.id"
+                  :error-messages="errors.id"
+                  label="Employee Number"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.firstname"
+                  :error-messages="errors.firstname"
+                  label="Firstname"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.middlename"
+                  :error-messages="errors.middlename"
+                  label="Middlename"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.lastname"
+                  :error-messages="errors.lastname"
+                  label="Lastname"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="3">
+                <v-select
+                  v-model="form.gender"
+                  :error-messages="errors.gender"
+                  :items="gender"
+                  label="Gender"
+                  outlined
+                ></v-select>
+              </v-col>
 
-          <v-col cols="12" lg="3">
-            <v-select
-              v-model="form.civil_status"
-              :error-messages="errors.civil_status"
-              :items="civil_status"
-              label="Civil Status"
-              outlined
-            ></v-select>
-          </v-col>
+              <v-col cols="12" lg="3">
+                <v-select
+                  v-model="form.civil_status"
+                  :error-messages="errors.civil_status"
+                  :items="civil_status"
+                  label="Civil Status"
+                  outlined
+                ></v-select>
+              </v-col>
 
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.birthday"
-              :error-messages="errors.birthday"
-              label="Birthday"
-              outlined
-            ></v-text-field>
-          </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.birthday"
+                  :error-messages="errors.birthday"
+                  label="Birthday"
+                  outlined
+                ></v-text-field>
+              </v-col>
 
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.email"
-              :error-messages="errors.email"
-              label="Email Address"
-              outlined
-            ></v-text-field>
-          </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.email"
+                  :error-messages="errors.email"
+                  label="Email Address"
+                  outlined
+                ></v-text-field>
+              </v-col>
 
-          <v-col cols="12" lg="6">
-            <v-select
-              v-model="form.school_id"
-              :error-messages="errors.school_id"
-              :items="schools"
-              item-text="name"
-              item-value="id"
-              label="School"
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.entrance_to_duty"
-              :error-messages="errors.entrance_to_duty"
-              label="Entrance To Duty"
-              outlined
-            ></v-text-field>
-          </v-col>
+              <v-col cols="12" lg="6">
+                <v-select
+                  v-model="form.school_id"
+                  :error-messages="errors.school_id"
+                  :items="schools"
+                  item-text="name"
+                  item-value="id"
+                  label="School"
+                  outlined
+                ></v-select>
+              </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.entrance_to_duty"
+                  :error-messages="errors.entrance_to_duty"
+                  label="Entrance To Duty"
+                  outlined
+                ></v-text-field>
+              </v-col>
 
-          <v-col cols="12" lg="3">
-            <v-select
-              v-model="form.employment_status"
-              :error-messages="errors.employment_status"
-              :items="emp_status"
-              label="Employment Status"
-              outlined
-            ></v-select>
-          </v-col>
+              <v-col cols="12" lg="3">
+                <v-select
+                  v-model="form.employment_status"
+                  :error-messages="errors.employment_status"
+                  :items="emp_status"
+                  label="Employment Status"
+                  outlined
+                ></v-select>
+              </v-col>
 
-          <v-col cols="12" lg="6">
-            <v-select
-              v-model="form.position_id"
-              :items="positions"
-              item-text="name"
-              item-value="id"
-              :error-messages="errors.position_id"
-              label="Position"
-              outlined
-            ></v-select>
-          </v-col>
+              <v-col cols="12" lg="6">
+                <v-select
+                  v-model="form.position_id"
+                  :items="positions"
+                  item-text="name"
+                  item-value="id"
+                  :error-messages="errors.position_id"
+                  label="Position"
+                  outlined
+                ></v-select>
+              </v-col>
 
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.tin"
-              :error-messages="errors.tin"
-              label="TIN"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="3">
-            <v-text-field
-              v-model="form.gsis_no"
-              :error-messages="errors.gsis_no"
-              label="GSIS NO"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.tin"
+                  :error-messages="errors.tin"
+                  label="TIN"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="3">
+                <v-text-field
+                  v-model="form.gsis_no"
+                  :error-messages="errors.gsis_no"
+                  label="GSIS NO"
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card-text>
+             <v-divider></v-divider>
+          <v-card-action>
+            <v-col cols="12">
+              <v-btn :loading="sending" color="primary" @click="submit"
+                >Save Employee</v-btn
+              >
+            </v-col>
+          </v-card-action>
+        </v-card>
       </v-form>
-    </v-col>
-
-    <v-col cols="12">
-      <v-btn :loading="sending" color="primary" @click="submit"
-        >Save Employee</v-btn
-      >
     </v-col>
   </v-row>
 </template>
