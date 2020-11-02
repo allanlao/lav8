@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer  permanent v-model="$root.sideDrawer" app >
+  <v-navigation-drawer permanent v-model="$root.sideDrawer" app>
     <v-app-bar flat color="#303030">
       <v-row align="center" justify="center">
         <v-col cols="12" class="text-center pt-6">
@@ -30,16 +30,38 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="$inertia.get('/leaves/')">
+        <v-divider></v-divider>
+
+        <v-list-item link @click="$inertia.get('/home')">
           <v-list-item-icon>
             <v-icon>event_note</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>Leaves </v-list-item-title>
+            <v-list-item-title>New Leave Application </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
-          <v-list-item link @click="$inertia.get('/employees')">
+        <v-list-item link @click="$inertia.get('/leaves')">
+          <v-list-item-icon>
+            <v-icon>event_note</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Approved Leaves </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link @click="$inertia.get('/leaves_approval')">
+          <v-list-item-icon>
+            <v-icon>event_note</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Pending Leaves </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item link @click="$inertia.get('/employees')">
           <v-list-item-icon>
             <v-icon>more_time</v-icon>
           </v-list-item-icon>
@@ -65,8 +87,6 @@
             <v-list-item-title> Leave Credits by Group </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
-      
 
         <v-list-item link @click="$inertia.get('/employees')">
           <v-list-item-icon>

@@ -47,7 +47,7 @@ export default {
   },
 
   data: (vm) => ({
-    title: "Employee List",
+    title: "Search Employee Here",
     editedIndex: -1,
     search: "",
     headers: [

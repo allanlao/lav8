@@ -39,6 +39,11 @@ Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 Route::resource('leaves',LeaveController::class)->except(['create']);
 Route::get('/leaves/create/{id}', [LeaveController::class, 'create']);
+Route::get('/leaves/delete/{id}', [LeaveController::class, 'destroy']);
+Route::get('/leaves_approval', [LeaveController::class, 'approval']);
+Route::get('/leaves_approval/{id}/{user}', [LeaveController::class, 'approve']);
+
+
 
 
 //Leave Credit

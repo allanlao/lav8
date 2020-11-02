@@ -16,10 +16,7 @@
     <v-col cols="12">
       <v-data-table :headers="headers" :items="data" :search="search">
         <template v-slot:item.actions="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon small primary @click="deleteItem(item)"> mdi-delete </v-icon>
+          <v-icon small class="mr-2" @click="showItem(item)"> mdi-eye </v-icon>
         </template>
       </v-data-table>
     </v-col>
@@ -38,41 +35,33 @@ export default {
     data: Array,
   },
 
-  data: (vm) => ({
-    editedIndex: -1,
-    search: "",
-    headers: [
-      { text: "Date Filed", value: "id" },
-      { text: "Name", value: "full_name" },
-      { text: "School", value: "school.name" },
-      { text: "Postion", value: "position.name" },
-      { text: "Type", value: "position.name" },
-      { text: "Days", value: "position.name" },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
-  }),
+  data() {
+    return {
+      editedIndex: -1,
+      search: "",
+      headers: [
+        { text: "Date Filed", value: "date_filed" },
+        { text: "Name", value: "employee.full_name" },
+        { text: "School", value: "employee.school.name" },
+        { text: "Postion", value: "employee.position.name" },
+        { text: "Type", value: "type" },
+        { text: "Inclusive Dates", value: "inclusive_dates" },
+        { text: "Days", value: "total_days" },
+        { text: "Encoded By", value: "encoded_by" },
+        { text: "Approved By", value: "approved_by" },
+
+        { text: "Actions", value: "actions", sortable: false },
+      ],
+    };
+  },
 
   methods: {
     create() {
-      this.$inertia.get("/leaves/create");
+      this.$inertia.get("/home");
     },
 
-    editItem(item) {
-      this.$inertia.get("/employees/" + item.id);
-    },
-
-    viewCoc(item) {
-      this.$inertia.get("/cocs/" + item.id);
-    },
-
-    viewCredit(item) {
-      this.$inertia.get("/credits/" + item.id);
-    },
-
-    deleteItem(item) {
-      if (confirm("Are you sure you want to delete this employee?")) {
-        this.$inertia.get("/employees/delete/" + item.id);
-      }
+    showItem(item) {
+      this.$inertia.get("/leaves/show/" + item.id);
     },
   },
 };

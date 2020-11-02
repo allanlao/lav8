@@ -178,6 +178,29 @@
         </v-card>
       </v-form>
     </v-col>
+
+    <v-col>
+      <v-card>
+        <v-card-title> </v-card-title>
+
+        <v-card-text>
+          <v-data-table
+            :headers="headers"
+            :items="employee_leaves"
+            :search="search"
+          >
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="editItem(item)">
+                mdi-pencil
+              </v-icon>
+              <v-icon small primary @click="deleteItem(item)">
+                mdi-delete
+              </v-icon>
+            </template>
+          </v-data-table>
+        </v-card-text>
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 
@@ -197,7 +220,7 @@ export default {
 
   props: {
     errors: Object,
-
+    employee_leaves: Array,
     employee: Object,
   },
 
@@ -207,7 +230,7 @@ export default {
       form: {
         id: null,
         date_filed: new Date().toISOString().substr(0, 10),
-        employee_id: null,
+        employee_id: this.employee.id,
         type: "vacation",
         location: null,
         location_type: "local",
@@ -244,15 +267,34 @@ export default {
         { value: "requested", text: "Requested" },
         { value: "none", text: "Not Requested" },
       ],
+      search: "",
+
+      headers: [
+        { text: "Date Filed", value: "date_filed" },
+        { text: "Type", value: "type" },
+        { text: "Location", value: "location" },
+        { text: "Inclusive Date", value: "inclusive_dates" },
+        { text: "Days", value: "total_days" },
+        { text: "With Pay", value: "total_approved_with_pay" },
+        { text: "Encoded By", value: "encoded_by" },
+        { text: "Actions", value: "actions", sortable: false },
+      ],
     };
   },
 
   methods: {
     submit() {
+      this.form.encoded_by = "the user";
       this.$inertia.post("/leaves", this.form);
     },
     reset() {
       this.$refs.form.reset();
+    },
+
+    deleteItem(item) {
+      if (confirm("Are you sure you want to delete this leave?")) {
+        this.$inertia.get("/leaves/delete/" + item.id);
+      }
     },
   },
 };

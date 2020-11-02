@@ -28,6 +28,7 @@ class Leave extends Model
         'sl_balance',
         'disapproved_reason',
         'encoded_by',
+        'approved_by',
       
         ];
 

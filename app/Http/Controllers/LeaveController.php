@@ -16,13 +16,23 @@ class LeaveController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //list records
+     //list of approved records
     public function index()
     {
-        $data = Leave::all();
+        $data = Leave::with(['employee.school','employee.position'])
+        ->where('approved_by','!=',null)->get();
 
         return Inertia::render('Leaves/Index', ['data' => $data]);
 
+    }
+
+
+    public function approval(){
+        $data = Leave::with(['employee.school','employee.position'])
+        ->where('approved_by',null)->get();
+
+        return Inertia::render('Leaves/Approval', ['data' => $data]);
+       
     }
 
     /**
@@ -33,8 +43,9 @@ class LeaveController extends Controller
     public function create($id)
     {
 
+        $employee_leaves = Leave::where('employee_id',$id)->get();
         $employee = Employee::with(['school','position'])->find($id);
-        return Inertia::render('Leaves/Create',['employee'=>$employee]);
+        return Inertia::render('Leaves/Create',['employee'=>$employee,'employee_leaves'=>$employee_leaves]);
 
     }
 
@@ -62,10 +73,10 @@ class LeaveController extends Controller
             'total_approved_with_pay' => 'required|numeric|min:0',
             'total_approved_without_pay' => 'required|numeric|min:0',
             'total_approved_others' => 'required|numeric|min:0',
-            'vl_balance' => 'required|numeric|min:0',
-            'sl_balance' => 'required|numeric|min:0',
+            'vl_balance' => 'required|numeric|min:0|max:999',
+            'sl_balance' => 'required|numeric|min:0|max:999',
             'disapproved_reason' => 'nullable',
-            'encoded_by' => 'nullable',
+            'encoded_by' => 'required',
           
         ]);
 
@@ -109,6 +120,14 @@ class LeaveController extends Controller
         //
     }
 
+    public function approve($id,$user){
+       $leave =  Leave::find($id);
+       $leave->approved_by = $user;
+       $leave->save();
+       return back()->with('success', 'Leave approved successfully.');
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -117,6 +136,9 @@ class LeaveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = Leave::destroy($id);
+
+        return back()->with('success', 'Leave deleted successfully.');
+
     }
 }

@@ -35,7 +35,8 @@ class CreateLeavesTable extends Migration
             $table->string('disapproved_reason', 50)->nullable();
 
             $table->timestamps();
-            $table->string('encoded_by', 50)->nullable();
+            $table->string('encoded_by', 50);
+            $table->string('approved_by', 50)->nullable();
             $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
