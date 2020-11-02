@@ -1,5 +1,22 @@
 <template>
   <v-row>
+
+   <v-col cols="12">
+      <v-card>
+        <v-app-bar color="primary" flat dark>
+          <v-btn icon>
+            <v-icon size="40">view_list</v-icon>
+          </v-btn>
+
+
+          <v-toolbar-title>List of Pending Leave Applications </v-toolbar-title>
+        </v-app-bar>
+
+        <v-card-text>
+
+
+
+    <v-row>
     <v-col cols="4" align-self="center">
       <v-text-field
         v-model="search"
@@ -21,13 +38,19 @@
             <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
           </v-btn>
 
-          <v-btn class="ma-2" color="red" dark @click="deleteItem(item)">
-            Delete
+          <v-btn class="ma-2" color="red" dark @click="disapproveItem(item)">
+            Disapprove
             <v-icon dark right> mdi-cancel </v-icon>
           </v-btn>
         </template>
       </v-data-table>
     </v-col>
+</v-row>
+
+   </v-card-text>
+      </v-card>
+    </v-col>
+
   </v-row>
 </template>
 
@@ -74,13 +97,13 @@ export default {
 
     approveItem(item) {
       if (confirm("Are you sure you want to Approve this leave?")) {
-        this.$inertia.get("/leaves_approval/" + item.id + "/" + "allan");
+        this.$inertia.get("/leaves_approval/" + item.id + "/" + "allan" + "/approved" );
       }
     },
 
-    deleteItem(item) {
-      if (confirm("Are you sure you want to delete this leave?")) {
-        this.$inertia.get("/leaves/delete/" + item.id);
+    disapproveItem(item) {
+      if (confirm("Are you sure you want to Disapprove this leave?")) {
+        this.$inertia.get("/leaves_approval/" + item.id + "/" + "allan" + "/disapproved" );
       }
     },
   },

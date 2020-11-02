@@ -61,14 +61,39 @@
 
         <v-divider></v-divider>
 
-        <v-list-item link @click="$inertia.get('/employees')">
+      
+
+        <v-list-item link @click="$inertia.get('/home')">
           <v-list-item-icon>
             <v-icon>more_time</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title> COC / CTO </v-list-item-title>
+            <v-list-item-title>New COC/CTO Application </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item link @click="$inertia.get('/cocs')">
+          <v-list-item-icon>
+            <v-icon>event_note</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Approved COC/CTO </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link @click="$inertia.get('/cocs_approval')">
+          <v-list-item-icon>
+            <v-icon>event_note</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Pending COC/CTO </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+
+      
 
         <v-list-item link @click="$inertia.get('/employees/')">
           <v-list-item-icon>

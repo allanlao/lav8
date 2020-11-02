@@ -23,8 +23,12 @@ class CreateLeaveCocTable extends Migration
             $table->date('osr_to');
             $table->integer('hours');
             $table->integer('balance');
+           
             $table->timestamps();
-            $table->string('encoded_by',50)->nullable();
+            $table->string('encoded_by', 50);
+            $table->string('approved_by', 50)->nullable();
+            $table->enum('coc_status', ['pending', 'disapproved', 'approved']);
+        
             $table->foreign('employee_id')->references('id')->on('employees');
         });
     }

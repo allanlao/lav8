@@ -29,6 +29,7 @@ class Leave extends Model
         'disapproved_reason',
         'encoded_by',
         'approved_by',
+        'leave_status',
       
         ];
 

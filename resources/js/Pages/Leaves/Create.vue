@@ -285,6 +285,7 @@ export default {
   methods: {
     submit() {
       this.form.encoded_by = "the user";
+      this.form.leave_status = 'pending';
       this.$inertia.post("/leaves", this.form);
     },
     reset() {

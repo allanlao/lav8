@@ -8,17 +8,21 @@ use Inertia\Inertia;
 
 class LeaveCocController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
 
-        $data = LeaveCoc::where('employee_id', $id)->get();
+        $data = LeaveCoc::with(['employee.school','employee.position'])
+        ->where('coc_status','!=','pending')->get();
 
-        return Inertia::render('LeaveCocs/Index', ['data' => $data, 'id' => $id]);
+        return Inertia::render('LeaveCocs/Index', ['data' => $data]);
 
     }
 
@@ -74,6 +78,9 @@ class LeaveCocController extends Controller
         $coc->osr_to = $request->osr_to;
         $coc->hours = $request->hours;
         $coc->balance = $lastBalance + $request->hours;
+        $coc->coc_status = "pending";
+        $coc->encoded_by ="me";
+        
 
         $coc->save();
 
@@ -124,4 +131,24 @@ class LeaveCocController extends Controller
     {
         //
     }
+
+    public function approve($id,$user,$action){
+        $model =  LeaveCoc::find($id);
+        $model->approved_by = $user;
+        $model->coc_status = $action;
+        $model->save();
+        return back()->with('success', 'COC/CTO approved successfully.');
+ 
+     }
+
+     
+    public function approval(){
+        $data = LeaveCoc::with(['employee.school','employee.position'])
+        ->where('coc_status','pending')->get();
+
+        return Inertia::render('LeaveCocs/Approval', ['data' => $data]);
+       
+    }
+ 
+
 }

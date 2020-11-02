@@ -20,7 +20,7 @@ class LeaveController extends Controller
     public function index()
     {
         $data = Leave::with(['employee.school','employee.position'])
-        ->where('approved_by','!=',null)->get();
+        ->where('leave_status','!=','pending')->get();
 
         return Inertia::render('Leaves/Index', ['data' => $data]);
 
@@ -29,7 +29,7 @@ class LeaveController extends Controller
 
     public function approval(){
         $data = Leave::with(['employee.school','employee.position'])
-        ->where('approved_by',null)->get();
+        ->where('leave_status','pending')->get();
 
         return Inertia::render('Leaves/Approval', ['data' => $data]);
        
@@ -120,9 +120,10 @@ class LeaveController extends Controller
         //
     }
 
-    public function approve($id,$user){
+    public function approve($id,$user,$action){
        $leave =  Leave::find($id);
        $leave->approved_by = $user;
+       $leave->leave_status = $action;
        $leave->save();
        return back()->with('success', 'Leave approved successfully.');
 

@@ -21,10 +21,10 @@
             <template v-slot:item.actions="{ item }">
               
               <v-btn  color="primary" @click="leaves(item)">
-                <v-icon > event_note </v-icon></v-btn
+                <v-icon > event_note </v-icon>Leave</v-btn
               >
-              <v-btn  color="primary" @click="viewCoc(item)">
-                <v-icon > mdi-eye </v-icon>COC</v-btn
+              <v-btn  color="primary" @click="cocs(item)">
+                <v-icon > more_time </v-icon>COC</v-btn
               >
             </template>
           </v-data-table>
@@ -69,8 +69,8 @@ export default {
       this.$inertia.get("/leaves/create/" + item.id);
     },
 
-    viewCoc(item) {
-      this.$inertia.get("/cocs/" + item.id);
+    cocs(item) {
+      this.$inertia.get("/cocs/create/" + item.id);
     },
 
     viewCredit(item) {

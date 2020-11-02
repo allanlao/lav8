@@ -30,10 +30,10 @@ class CreateLeavesTable extends Migration
             $table->integer('total_approved_without_pay');
             $table->integer('total_approved_others');
 
-            $table->decimal('vl_balance', 3);
-            $table->decimal('sl_balance', 3);
+            $table->decimal('vl_balance', 5);
+            $table->decimal('sl_balance', 5);
             $table->string('disapproved_reason', 50)->nullable();
-
+            $table->enum('leave_status', ['pending', 'disapproved', 'approved']);
             $table->timestamps();
             $table->string('encoded_by', 50);
             $table->string('approved_by', 50)->nullable();

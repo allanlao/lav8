@@ -41,9 +41,16 @@ Route::resource('leaves',LeaveController::class)->except(['create']);
 Route::get('/leaves/create/{id}', [LeaveController::class, 'create']);
 Route::get('/leaves/delete/{id}', [LeaveController::class, 'destroy']);
 Route::get('/leaves_approval', [LeaveController::class, 'approval']);
-Route::get('/leaves_approval/{id}/{user}', [LeaveController::class, 'approve']);
+Route::get('/leaves_approval/{id}/{user}/{action}', [LeaveController::class, 'approve']);
 
 
+//Leave Coc
+
+Route::get('/cocs', [LeaveCocController::class, 'index']);
+Route::post('/cocs/store', [LeaveCocController::class, 'store']);
+Route::get('/cocs/create/{id}', [LeaveCocController::class, 'create'])->name('create_coc');
+Route::get('/cocs_approval', [LeaveCocController::class, 'approval']);
+Route::get('/cocs_approval/{id}/{user}/{action}', [LeaveCocController::class, 'approve']);
 
 
 //Leave Credit
@@ -54,11 +61,7 @@ Route::post('/credits/storeMany', [LeaveCreditController::class, 'storeMany']);
 Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
 
-//Leave Coc
 
-Route::get('/cocs/{id}', [LeaveCocController::class, 'index']);
-Route::post('/cocs/store', [LeaveCocController::class, 'store']);
-Route::get('/cocs/create/{id}', [LeaveCocController::class, 'create'])->name('create_coc');
 
 
 Auth::routes();
