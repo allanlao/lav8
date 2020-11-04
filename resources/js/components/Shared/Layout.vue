@@ -5,7 +5,7 @@
 
     <v-main>
       <v-container fluid scroll-region>
-        <flash-messages></flash-messages>
+      
         <slot/>
       </v-container>
     </v-main>

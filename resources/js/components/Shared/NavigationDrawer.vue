@@ -133,7 +133,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="$inertia.get('/')">
+        <v-list-item link @click="$inertia.post('/logout')">
           <v-list-item-icon>
             <v-icon>exit_to_app</v-icon>
           </v-list-item-icon>

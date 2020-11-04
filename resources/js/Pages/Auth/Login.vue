@@ -1,26 +1,59 @@
 <template>
-  <div class="p-6 bg-indigo-800 min-h-screen flex justify-center items-center">
-    <div class="w-full max-w-md">
-      <logo class="block mx-auto w-full max-w-xs fill-white" height="50" />
-      <form class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden" @submit.prevent="submit">
-        <div class="px-10 py-12">
-          <h1 class="text-center font-bold text-3xl">Welcome Back!</h1>
-          <div class="mx-auto mt-6 w-24 border-b-2" />
-          <text-input v-model="form.email"  class="mt-10" label="Email" type="email" autofocus autocapitalize="off" />
-          <text-input v-model="form.password" class="mt-6" label="Password" type="password" />
-          <label class="mt-6 select-none flex items-center" for="remember">
-            <input id="remember" v-model="form.remember" class="mr-1" type="checkbox">
-            <span class="text-sm">Remember Me</span>
-          </label>
-        </div>
-        <div class="px-10 py-4 bg-gray-100 border-t border-gray-200 flex justify-between items-center">
-          <a class="hover:underline" tabindex="-1" href="#reset-password">Forget password?</a>
-          <loading-button :loading="sending" class="btn-indigo" type="submit">Login</loading-button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <v-app id="inspire">
+    <v-content>
+      <v-container fluid>
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="4" class="text-center">
+            <logo height="50" style="fill:white"></logo>
+          </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="4">
+            <v-card class="elevation-12">
+              <v-card-text>
+                <v-form>
+                  <v-row dense>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="form.email"
+                        label="Email"
+                        name="email"
+                        type="email"
+                        :error-messages="errors.email"
+                        outlined
+                        autocomplete="email"
+                      />
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="form.password"
+                        label="Password"
+                        name="password"
+                        type="password"
+                        outlined
+                        autocomplete="current-password"
+                      />
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-checkbox class="pa-0 ma-0" label="Remember me" v-model="form.remember"></v-checkbox>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn @click="submit" large color="primary">Login</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
+
 
 <script>
 
@@ -51,10 +84,7 @@ export default {
         remember: this.form.remember,
       }
 
-      this.$inertia.post(this.route('login.attempt'), data, {
-        onStart: () => this.sending = true,
-        onFinish: () => this.sending = false,
-      })
+      this.$inertia.post('/login',data);
     },
   },
 }

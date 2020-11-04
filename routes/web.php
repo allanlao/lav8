@@ -18,12 +18,14 @@ use App\Http\Controllers\LeaveController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::namespace('App\Http\Controllers')->group(function () {
+    Auth::routes();
+});
 // Auth
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
+/*Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
 Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
+*/
 Route::middleware('auth')
 ->group(function () {
 
@@ -74,3 +76,8 @@ Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 });
+
+Route::namespace('App\Http\Controllers')->group(function () {
+    Auth::routes();
+});
+

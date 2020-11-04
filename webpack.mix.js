@@ -1,7 +1,5 @@
 const mix = require('laravel-mix');
-
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,12 +10,8 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-
-
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
-   .sourceMaps()
    .webpackConfig({
   
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
@@ -28,11 +22,7 @@ mix.js('resources/js/app.js', 'public/js')
         '@': path.resolve('resources/js'),
       },
     },
-}).babelConfig({
-  plugins: ['@babel/plugin-syntax-dynamic-import'],
 })
-
- 
    mix.extend('vuetify', new class {
     webpackConfig (config) {
         config.plugins.push(new VuetifyLoaderPlugin())
