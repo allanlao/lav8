@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer permanent v-model="$root.sideDrawer" app>
-    <v-app-bar flat color="#303030">
+    <v-app-bar flat color="primary">
       <v-row align="center" justify="center">
         <v-col cols="12" class="text-center pt-6">
           <logo></logo>
@@ -95,7 +95,7 @@
 
       
 
-        <v-list-item link @click="$inertia.get('/employees/')">
+        <v-list-item link @click="$inertia.get('/home/')">
           <v-list-item-icon>
             <v-icon>monetization_on</v-icon>
           </v-list-item-icon>
@@ -113,14 +113,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="$inertia.get('/employees')">
-          <v-list-item-icon>
-            <v-icon>business</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> Application for Leave </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+    
 
         <v-list-item link @click="$inertia.get('/')">
           <v-list-item-icon>

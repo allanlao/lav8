@@ -1,52 +1,39 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <v-card>
-        <v-app-bar color="primary" flat dark>
-          <v-btn icon>
-            <v-icon size="40">view_list</v-icon>
-          </v-btn>
-
-
-          <v-toolbar-title>List of Approved COC/CTO </v-toolbar-title>
-        </v-app-bar>
-
-        <v-card-text>
-     
-          <v-row>
-            <v-col cols="4" align-self="center">
-              <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Search"
-                hide-details
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="4" offset="4" align-self="center">
-              <v-btn @click="create(id)" color="primary" large>Create New COC</v-btn>
-            </v-col>
-
-          </v-row>
-          <v-divider> </v-divider>
-          <v-row>
-            <v-col cols="12">
-              <v-data-table :headers="headers" :items="data" :search="search">
-                <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="editItem(item)">
-                    mdi-pencil
-                  </v-icon>
-                  <v-icon small primary @click="deleteItem(item)">
-                    mdi-delete
-                  </v-icon>
-                </template>
-              </v-data-table>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+  <CardWrapper :card_title="card.title">
+    <v-card-text>
+      <v-row>
+        <v-col cols="4" align-self="center">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            hide-details
+            outlined
+          ></v-text-field>
+        </v-col>
+        <v-col cols="4" offset="4" align-self="center">
+          <v-btn @click="create(id)" color="primary" large
+            >Create New COC</v-btn
+          >
+        </v-col>
+      </v-row>
+      <v-divider> </v-divider>
+      <v-row>
+        <v-col cols="12">
+          <v-data-table :headers="headers" :items="data" :search="search">
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="editItem(item)">
+                mdi-pencil
+              </v-icon>
+              <v-icon small primary @click="deleteItem(item)">
+                mdi-delete
+              </v-icon>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </CardWrapper>
 </template>
 
 <script>
@@ -62,6 +49,11 @@ export default {
   },
 
   data: (vm) => ({
+    card: {
+      title: "List of Approved COC/CTO",
+      url: "employees.index",
+    },
+
     editedIndex: -1,
     search: "",
     headers: [

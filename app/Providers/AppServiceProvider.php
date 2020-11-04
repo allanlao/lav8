@@ -39,11 +39,7 @@ class AppServiceProvider extends ServiceProvider
 
         Inertia::share([
 
-            'divisions'=> function(){
-                     return[
-                         'Ilocos Norte','Ilocos Sur'
-                     ];
-            },
+           
          
             'flash' => function () {
                 return [

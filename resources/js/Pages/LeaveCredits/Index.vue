@@ -1,92 +1,89 @@
 <template>
-  <v-row >
-        <v-col cols="12" >
- 
-       <v-row>
-    <v-col cols="2" align-self="center">
-      <v-menu
-        :close-on-content-click="false"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on, period }">
-          <v-text-field
-            v-model="form.period"
-           :error-messages="errors.period"
-            label="Period"
+  <CardWrapper :card_title="card.title">
+    <v-card-title>
+      <v-row>
+        <v-col cols="2" align-self="center">
+          <v-menu
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, period }">
+              <v-text-field
+                v-model="form.period"
+                :error-messages="errors.period"
+                label="Period"
+                outlined
+                readonly
+                v-bind="period"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="form.period"
+              no-title
+              type="month"
+              @input="menu1 = false"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+
+        <v-col cols="2" align-self="center">
+          <v-select
+            v-model="form.leave_type"
+            :error-messages="errors.leave_type"
+            :items="leave_type"
+            label="Leave Type"
             outlined
-            readonly
-        
-            v-bind="period"
-            v-on="on"
+          ></v-select>
+        </v-col>
+
+        <v-col cols="2" align-self="center">
+          <v-text-field
+            v-model="form.credit"
+            :error-messages="errors.credit"
+            label="Credit Amount"
+            outlined
+            type="number"
           ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="form.period"
-          no-title
-          type="month"
-          @input="menu1 = false"
-        ></v-date-picker>
-      </v-menu>
-    </v-col>
+        </v-col>
+        <v-col cols="3" align-self="center">
+          <v-text-field
+            v-model="form.remarks"
+            :error-messages="errors.remarks"
+            label="Remarks"
+            outlined
+          ></v-text-field>
+        </v-col>
 
-    <v-col cols="2" align-self="center">
-      <v-select
-        v-model="form.leave_type"
-        :error-messages="errors.leave_type"
-      
-        :items="leave_type"
-        label="Leave Type"
-        outlined
-      ></v-select>
+        <v-col cols="2">
+          <v-btn large color="primary" @click="submit">Add Leave Credit</v-btn>
+        </v-col>
+      </v-row>
 
-    </v-col>
-
-    <v-col cols="2" align-self="center">
-      <v-text-field
-        v-model="form.credit"
-        :error-messages="errors.credit"
-        label="Credit Amount"
-     
-        outlined
-        type="number"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="3" align-self="center">
-      <v-text-field
-        v-model="form.remarks"
-       :error-messages="errors.remarks"
-        label="Remarks"
-   
-        outlined
-      ></v-text-field>
-    </v-col>
-
-    <v-col cols="2">
-      <v-btn large color="primary" 
-      @click="submit"
-      
-      >Add Leave Credit</v-btn>
-    </v-col>
-</v-row>
-    
-      </v-col>
-    <v-col cols="12">
-      <v-data-table :headers="headers" :items="data" :search="search">
-        <template v-slot:item.actions="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon small primary @click="deleteItem(item)"> mdi-delete </v-icon>
-        </template>
-      </v-data-table>
-    </v-col>
-  </v-row>
+      <div>FLash{{$page.props.flash.success}}</div>
+      <v-row>
+        <v-col cols="12">
+          <v-data-table :headers="headers" :items="data" :search="search">
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="editItem(item)">
+                mdi-pencil
+              </v-icon>
+              <v-icon small primary @click="deleteItem(item)">
+                mdi-delete
+              </v-icon>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-card-title>
+  </CardWrapper>
 </template>
 
 <script>
 import Layout from "@shared/Layout";
+
 
 export default {
   metaInfo: { title: "Leave Credits" },
@@ -97,10 +94,15 @@ export default {
     data: Array,
     id: null,
     errors: Object,
-    flash:Object,
+    flash: Object,
   },
 
   data: (vm) => ({
+    card: {
+      title: "Leave Credit Form",
+      url: "employees.index",
+    },
+
     editedIndex: -1,
     search: "",
 
@@ -145,11 +147,8 @@ export default {
     },
 
     submit() {
-
       this.form.employee_id = this.id;
-      this.$inertia.post("/credits/storeOne", 
-        this.form,
-      );
+      this.$inertia.post("/credits/storeOne", this.form);
     },
   },
 };

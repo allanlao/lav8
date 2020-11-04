@@ -1,14 +1,13 @@
 <template>
   <v-snackbar
-    v-model="$root.flashSnackbar"
+    v-model="snackbar"
     color="success"
-    multi-line
     :timeout="6000"
     top
     @input="close"
     vertical
   >
-    {{ $root.flashMessage }}
+    {{  $page.props.flash.success }}
     <v-btn
       dark
       text
@@ -22,12 +21,10 @@
 <script>
   export default {
     name: 'FlashMessages',
-    data: vm => ({}),
-    methods: {
-      close() {
-        this.$root.flashSnackbar = false
-        this.$root.flashMessage = ''
-      }
-    }
+
+      data: () => ({
+      snackbar: true,
+    
+    }),
   }
 </script>

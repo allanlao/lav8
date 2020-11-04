@@ -19,6 +19,14 @@ use App\Http\Controllers\LeaveController;
 |
 */
 
+// Auth
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
+Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::middleware('auth')
+->group(function () {
+
 // Dashboard
 
 Route::get('/', [DashboardController::class, 'index']);
@@ -63,9 +71,6 @@ Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
 
 
-
-Auth::routes();
-
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+});

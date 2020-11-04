@@ -1,7 +1,6 @@
 <template>
-  <v-card>
-    <v-card-title>{{ title }}</v-card-title>
-    <v-card-text>
+  <CardWrapper :card_title="card.title">
+    <v-card-text class="pa-10">
       <v-row>
         <v-col cols="4">
           <v-text-field
@@ -12,41 +11,51 @@
             outlined
           ></v-text-field>
         </v-col>
-      
       </v-row>
 
       <v-row>
         <v-col>
           <v-data-table :headers="headers" :items="data" :search="search">
             <template v-slot:item.actions="{ item }">
-              
-              <v-btn  color="primary" @click="leaves(item)">
-                <v-icon > event_note </v-icon>Leave</v-btn
+              <v-btn color="primary" outlined @click="leaves(item)">
+                <v-icon> event_note </v-icon>Leave</v-btn
               >
-              <v-btn  color="primary" @click="cocs(item)">
-                <v-icon > more_time </v-icon>COC</v-btn
+              <v-btn color="primary" outlined @click="cocs(item)">
+                <v-icon> more_time </v-icon>COC</v-btn
+              >
+
+              <v-btn color="primary" outlined @click="credits(item)">
+                <v-icon> more_time </v-icon>Credits</v-btn
               >
             </template>
           </v-data-table>
         </v-col>
       </v-row>
     </v-card-text>
-  </v-card>
+  </CardWrapper>
 </template>
-
 <script>
 import Layout from "@shared/Layout";
+import CardWrapper from "@shared/CardWrapper";
 
 export default {
   metaInfo: { title: "Employees" },
+  
 
   layout: (h, page) => h(Layout, [page]),
 
   props: {
     data: Array,
+    
   },
 
   data: (vm) => ({
+  
+
+    card: {
+      title: "Employee Directory",
+      url: "employees.index",
+    },
     title: "Search Employee Here",
     editedIndex: -1,
     search: "",
@@ -73,7 +82,7 @@ export default {
       this.$inertia.get("/cocs/create/" + item.id);
     },
 
-    viewCredit(item) {
+    credits(item) {
       this.$inertia.get("/credits/" + item.id);
     },
 

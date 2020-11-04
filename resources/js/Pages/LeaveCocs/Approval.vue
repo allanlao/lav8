@@ -1,60 +1,48 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <v-card>
-        <v-app-bar color="primary" flat dark>
-          <v-btn icon>
-            <v-icon size="40">view_list</v-icon>
-          </v-btn>
+  <CardWrapper :card_title="card.title">
+    <v-card-text>
+      <v-row>
+        <v-col cols="4" align-self="center">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            hide-details
+            outlined
+          ></v-text-field>
+        </v-col>
+        <v-col cols="4" offset="4" align-self="center">
+          <v-btn @click="create" color="primary">Create COC/CTO</v-btn>
+        </v-col>
 
-          <v-toolbar-title>List of Pending COC/CTO </v-toolbar-title>
-        </v-app-bar>
+        <v-col cols="12">
+          <v-data-table :headers="headers" :items="data" :search="search">
+            <template v-slot:item.actions="{ item }">
+              <v-btn
+                class="ma-2"
+                color="primary"
+                dark
+                @click="approveItem(item)"
+              >
+                Accept
+                <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
+              </v-btn>
 
-        <v-card-text>
-          <v-row>
-            <v-col cols="4" align-self="center">
-              <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Search"
-                hide-details
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="4" offset="4" align-self="center">
-              <v-btn @click="create" color="primary">Create COC/CTO</v-btn>
-            </v-col>
-
-            <v-col cols="12">
-              <v-data-table :headers="headers" :items="data" :search="search">
-                <template v-slot:item.actions="{ item }">
-                  <v-btn
-                    class="ma-2"
-                    color="primary"
-                    dark
-                    @click="approveItem(item)"
-                  >
-                    Accept
-                    <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
-                  </v-btn>
-
-                  <v-btn
-                    class="ma-2"
-                    color="red"
-                    dark
-                    @click="disapproveItem(item)"
-                  >
-                    Disapprove
-                    <v-icon dark right> mdi-cancel </v-icon>
-                  </v-btn>
-                </template>
-              </v-data-table>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+              <v-btn
+                class="ma-2"
+                color="red"
+                dark
+                @click="disapproveItem(item)"
+              >
+                Disapprove
+                <v-icon dark right> mdi-cancel </v-icon>
+              </v-btn>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </CardWrapper>
 </template>
 
 <script>
@@ -71,6 +59,10 @@ export default {
 
   data() {
     return {
+      card: {
+        title: "COC/CTO Approval Form",
+        url: "employees.index",
+      },
       editedIndex: -1,
       search: "",
       headers: [

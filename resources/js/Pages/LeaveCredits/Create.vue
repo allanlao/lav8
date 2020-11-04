@@ -1,65 +1,57 @@
 <template>
-  <v-row>
- 
-    <v-col cols="12" align-self="center">
-      <v-card tile outlined>
-        <v-card-title>
-          <v-col cols="2" align-self="center">
-            <v-menu
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on, period }">
-                <v-text-field
-                  v-model="form.period"
-                  label="Period"
-                  outlined
-                  readonly
-                  prepend-icon="mdi-calendar"
-                  v-bind="period"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="form.period"
-                no-title
-                type="month"
-                @input="menu1 = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-col>
-        
-          <v-col cols="2" align-self="center">
+  <CardWrapper :card_title="card.title">
+    <v-card-title>
+      <v-col cols="2" align-self="center">
+        <v-menu
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, period }">
             <v-text-field
-              v-model="form.credit"
-              label="Credit Amount"
-              hide-details
+              v-model="form.period"
+              label="Period"
               outlined
-              type="number"
+              readonly
+              prepend-icon="mdi-calendar"
+              v-bind="period"
+              v-on="on"
             ></v-text-field>
-          </v-col>
-          <v-col cols="3" align-self="center">
-            <v-text-field
-              v-model="form.remarks"
-              label="Remarks"
-              hide-details
-              outlined
-            ></v-text-field>
-          </v-col>
+          </template>
+          <v-date-picker
+            v-model="form.period"
+            no-title
+            type="month"
+            @input="menu1 = false"
+          ></v-date-picker>
+        </v-menu>
+      </v-col>
 
-          <v-col cols="3" align-self="center">
-            <v-btn large color="primary" @click="submit"
-              >Add Leave Credit</v-btn
-            >
-          </v-col>
-        </v-card-title>
+      <v-col cols="2" align-self="center">
+        <v-text-field
+          v-model="form.credit"
+          label="Credit Amount"
+          hide-details
+          outlined
+          type="number"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3" align-self="center">
+        <v-text-field
+          v-model="form.remarks"
+          label="Remarks"
+          hide-details
+          outlined
+        ></v-text-field>
+      </v-col>
 
-      
-      </v-card>
-    </v-col>
-  </v-row>
+      <v-col cols="3" align-self="center">
+        <v-btn large color="primary" @click="submit">Add Leave Credit</v-btn>
+      </v-col>
+    </v-card-title>
+    
+  </CardWrapper>
 </template>
 
 <script>
@@ -70,13 +62,23 @@ export default {
   layout: (h, page) => h(Layout, [page]),
 
   props: {
- 
-   id: null,
+    employee: null,
+    id: null,
   },
 
   data() {
     return {
-    
+      card: {
+        title: "Leave Credit Form",
+        url: "employees.index",
+      },
+
+      profile: {
+        name: this.employee.full_name,
+        position: this.employee.position.name,
+        school: this.employee.school.name,
+      },
+
       form: {
         period: null,
         month: null,
