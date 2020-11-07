@@ -1,7 +1,7 @@
 <template>
   <CardWrapper :card_title="card.title">
     <v-card-text>
-      <div class="h2">{{ title }}</div>
+    
       <v-row>
         <v-col cols="3">
           <v-text-field
@@ -202,6 +202,7 @@ export default {
 
   methods: {
     submit() {
+      this.form.encoded_by =     this.$page.props.auth.user.name ;
       this.$inertia.post("/cocs/store", this.form);
     },
   },

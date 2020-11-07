@@ -1,5 +1,7 @@
 <template>
   <v-navigation-drawer permanent v-model="$root.sideDrawer" app>
+
+    
     <v-app-bar flat color="primary">
       <v-row align="center" justify="center">
         <v-col cols="12" class="text-center pt-6">
@@ -7,7 +9,29 @@
         </v-col>
       </v-row>
     </v-app-bar>
-    <v-list dense shaped>
+ <v-list>
+      
+
+        <v-list-item link>
+             <v-list-item-avatar>
+          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+        </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title class="title">
+            {{ $page.props.auth.user.name }}
+            </v-list-item-title>
+            <v-list-item-subtitle>     {{ $page.props.auth.user.name }}</v-list-item-subtitle>
+          </v-list-item-content>
+
+          <v-list-item-action>
+            <v-icon>mdi-menu-down</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+
+    <v-list  shaped>
+
       <v-list-item-group
         :value="currentController"
         active-class="light-blue lighten-5 blue--text text--darken-4"
@@ -104,7 +128,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="$inertia.post('/credits/grp', { filter: 1 })">
+        <v-list-item link @click="$inertia.post('/credits_grp', { filter: 1 })">
           <v-list-item-icon>
             <v-icon>business</v-icon>
           </v-list-item-icon>

@@ -275,7 +275,7 @@ export default {
 
   methods: {
     submit() {
-      this.form.encoded_by = "the user";
+      this.form.encoded_by = this.$page.props.auth.user.name;
       this.form.leave_status = "pending";
       this.$inertia.post("/leaves", this.form);
     },

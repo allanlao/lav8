@@ -79,7 +79,7 @@ class LeaveCocController extends Controller
         $coc->hours = $request->hours;
         $coc->balance = $lastBalance + $request->hours;
         $coc->coc_status = "pending";
-        $coc->encoded_by ="me";
+        $coc->encoded_by =$request->encoded_by;
         
 
         $coc->save();

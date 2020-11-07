@@ -97,13 +97,13 @@ export default {
 
     approveItem(item) {
       if (confirm("Are you sure you want to Approve this leave?")) {
-        this.$inertia.get("/leaves_approval/" + item.id + "/" + "allan" + "/approved" );
+        this.$inertia.get("/leaves_approval/" + item.id + "/" +  this.$page.props.auth.user.name + "/approved" );
       }
     },
 
     disapproveItem(item) {
       if (confirm("Are you sure you want to Disapprove this leave?")) {
-        this.$inertia.get("/leaves_approval/" + item.id + "/" + "allan" + "/disapproved" );
+        this.$inertia.get("/leaves_approval/" + item.id + "/" +  this.$page.props.auth.user.name + "/disapproved" );
       }
     },
   },

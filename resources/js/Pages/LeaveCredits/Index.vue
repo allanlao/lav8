@@ -148,6 +148,7 @@ export default {
 
     submit() {
       this.form.employee_id = this.id;
+      this.form.encoded_by =   this.$page.props.auth.user.name; 
       this.$inertia.post("/credits/storeOne", this.form);
     },
   },

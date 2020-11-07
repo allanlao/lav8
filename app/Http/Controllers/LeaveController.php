@@ -19,7 +19,9 @@ class LeaveController extends Controller
      //list of approved records
     public function index()
     {
-        $data = Leave::with(['employee.school','employee.position'])
+  
+    
+           $data = Leave::with(['employee.school','employee.position'])
         ->where('leave_status','!=','pending')->get();
 
         return Inertia::render('Leaves/Index', ['data' => $data]);

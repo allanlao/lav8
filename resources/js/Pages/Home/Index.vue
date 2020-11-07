@@ -71,7 +71,7 @@ export default {
 
   methods: {
     create() {
-      this.$inertia.get("/employees/create");
+      this.$inertia.visit(route("employees.create"));
     },
 
     leaves(item) {

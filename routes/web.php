@@ -18,9 +18,9 @@ use App\Http\Controllers\LeaveController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::namespace('App\Http\Controllers')->group(function () {
+//Route::namespace('App\Http\Controllers')->group(function () {
     Auth::routes();
-});
+//});
 // Auth
 /*Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
 Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
@@ -47,7 +47,7 @@ Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 //Leaves
 
-Route::resource('leaves',LeaveController::class)->except(['create']);
+Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
 Route::get('/leaves/create/{id}', [LeaveController::class, 'create']);
 Route::get('/leaves/delete/{id}', [LeaveController::class, 'destroy']);
 Route::get('/leaves_approval', [LeaveController::class, 'approval']);
@@ -65,8 +65,9 @@ Route::get('/cocs_approval/{id}/{user}/{action}', [LeaveCocController::class, 'a
 
 //Leave Credit
 
-Route::get('/credits/{id}', [LeaveCreditController::class, 'index'])->name('credits-index');
-Route::post('/credits/grp', [LeaveCreditController::class, 'createByGroup'])->name('credit-grp');
+Route::get('/credits/{id}', [LeaveCreditController::class, 'index'])->name('credits.index');
+Route::post('/credits_grp', [LeaveCreditController::class, 'createByGroup'])->name('credits.grp');
+Route::get('/credits_grp', [LeaveCreditController::class, 'createByGroup']);
 Route::post('/credits/storeMany', [LeaveCreditController::class, 'storeMany']);
 Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
@@ -77,7 +78,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 });
 
-Route::namespace('App\Http\Controllers')->group(function () {
-    Auth::routes();
-});
 

@@ -39,14 +39,15 @@ class LeaveCreditController extends Controller
      */
     public function createByGroup(Request $request)
     {
-        $employees = Employee::with('school');
+        $employees = Employee::with(['school']);
 
-        if ($request->filter != 1) {
+        if ($request->filter != 1 ) {
 
             $school_id = $request->school;
             $lastname = $request->lastname;
 
             $employees = $employees->where('lastname', 'like', $lastname . '%')
+                
 
                 ->when($school_id != 'Any', function ($q) use ($school_id) {
                     return $q->where('school_id', $school_id);
@@ -91,15 +92,16 @@ class LeaveCreditController extends Controller
         $model->type = $request->leave_type;
         $model->balance = 0;
         $model->remarks = $request->remarks;
+        $model->encoded_by = $request->encoded_by;  
 
         $model->save();
          
 
        // $leaveCredit = LeaveCredit::create($validatedData);
 
-       // return redirect()->route('credits-index')->with('success', 'Leave credit created.');
+      //  return redirect()->route('credits.grp')->with('success', 'Leave credit added successfully.');
 
-         return back()->with('success', 'User created successfully.');
+         return back()->with('success', 'Leave credit added successfully.');
 
     }
     /**
@@ -113,7 +115,8 @@ class LeaveCreditController extends Controller
         //
 
         $employees = $request->selected;
-        $form = $request->form;
+    
+
 
         /*$validatedData = $request->validate([
 
@@ -132,15 +135,16 @@ class LeaveCreditController extends Controller
             $model = new LeaveCredit();
 
             $model->employee_id = $employee;
-            $model->period = $form['period'];
-            $model->credit = $form['credit'];
+            $model->period = $request['period'];
+            $model->credit = $request['credit'];
             $model->balance = 0;
-            $model->remarks = $form['remarks'];
-
+            $model->remarks = $request['remarks'];
+            $model->encoded_by = $request['encoded_by'];
+            $model->type = $request['leave_type'];
             $sql_values .= $this->prepareLeaveModel($model);
             $this->insertLeaveCredits($sql_values);
         }
-        return redirect()->route('create-credit');
+        return back()->with('success', 'Leave credits added successfully.');
 
     }
 
@@ -196,6 +200,10 @@ class LeaveCreditController extends Controller
         $v[2] = $model->credit;
         $v[3] = $model->balance;
         $v[4] = "'" . $model->remarks . "'";
+        $v[5] = "'" . $model->encoded_by . "'";
+        $v[6] = "'" . $model->type . "'";
+        $v[7] = "'" .now() . "'";
+       
 
         $raw_value = implode(",", $v);
 
@@ -208,10 +216,19 @@ class LeaveCreditController extends Controller
         if (!empty($sql_values)) {
             $sql_values = substr($sql_values, 1);
             $sql = 'replace INTO leave_mc (period,
-            employee_id,credit,balance,remarks )
+            employee_id,credit,balance,remarks,encoded_by,type,created_at )
              VALUES ' . $sql_values;
 
             return DB::statement($sql);
         }
+    }
+
+
+
+
+    public function summary(){
+          
+
+
     }
 }

@@ -100,7 +100,7 @@ export default {
         )
       ) {
         this.$inertia.get(
-          "/cocs_approval/" + item.id + "/" + "allan" + "/approved"
+          "/cocs_approval/" + item.id + "/"+ this.$page.props.auth.user.name +"/approved"
         );
       }
     },
@@ -114,7 +114,7 @@ export default {
         )
       ) {
         this.$inertia.get(
-          "/cocs_approval/" + item.id + "/" + "allan" + "/disapproved"
+          "/cocs_approval/" + item.id + "/" +    this.$page.props.auth.user.name + "/disapproved"
         );
       }
     },
