@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Position;
 use App\Models\School;
+use App\Models\LeaveCredit;
+use App\Models\LeaveCoc;
+use App\Models\Leave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -79,5 +82,19 @@ class EmployeeController extends Controller
     public function delete($id){
         Employee::find($id)->delete();
         return redirect()->route('employees');
+    }
+
+    public function show($id){
+        $employee = Employee::with('school','position')->find($id);
+
+        $credits = LeaveCredit::where('employee_id',$id)->get();
+        $leaves = Leave::where('employee_id',$id)->get();
+        $cocs = LeaveCoc::where('employee_id',$id)->get();
+
+
+        
+
+
+        return Inertia::render('Employees/Show', ['employee' => $employee, 'credits'=>$credits,'leaves'=>$leaves,'cocs'=>$cocs]);
     }
 }

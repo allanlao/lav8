@@ -57,35 +57,43 @@
             </v-menu>
           </v-col>
 
-          <v-col cols="2">
-            <v-select
-              v-model="form.leave_type"
-              :items="leave_type"
-              label="Leave Type"
-              outlined
-              :rules="[(v) => !!v || 'Item is required']"
-            ></v-select>
-          </v-col>
-
-          <v-col cols="2">
+          <v-col cols="1">
             <v-text-field
-              v-model="form.credit"
-              label="Credit Amount"
+              v-model="form.vl_credit"
+              label="Vacation Leave"
               outlined
               type="number"
               :rules="[(v) => !!v || 'Item is required']"
             ></v-text-field>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="1">
+            <v-text-field
+              v-model="form.sl_credit"
+              label="Sick Leave"
+              outlined
+              type="number"
+              :rules="[(v) => !!v || 'Item is required']"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <v-text-field
+              v-model="form.other_credit"
+              label="Other Leave"
+              outlined
+              type="number"
+            
+            ></v-text-field>
+          </v-col>
+          <v-col cols="2">
             <v-text-field
               v-model="form.remarks"
               label="Remarks"
               outlined
-              :rules="[(v) => !!v || 'Item is required']"
+          
             ></v-text-field>
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="2">
             <v-btn
               large
               color="primary"
@@ -148,7 +156,9 @@ export default {
       form: {
         period: null,
         leave_type: null,
-        credit: 1.25,
+        vl_credit: 1.25,
+        sl_credit: 1.25,
+        other_credit: 0.0,
         remarks: null,
         selected: [],
       },
@@ -157,12 +167,9 @@ export default {
         { text: "Name", value: "full_name" },
         { text: "School", value: "school.name" },
         { text: "Division", value: "school.division" },
-        { text: "VL Credit", value: "school.division" },
+        { text: "VL Credit", value: "credits.vl_credit" },
       ],
-      leave_type: [
-        { value: "vl", text: "Vacation Leave" },
-        { value: "sl", text: "Sick Leave" },
-      ],
+   
     };
   },
 
@@ -186,17 +193,17 @@ export default {
       this.$refs.form.validate();
     },
     submit() {
-      if(this.$refs.form.validate()){
-       if (
-        confirm(
-          "Are you sure you want to add leave credits for " +
-            this.form.selected.length +
-            " employees?"
-        )
-      ) {
-        this.form.encoded_by = this.$page.props.auth.user.name;
-        this.$inertia.post("/credits/storeMany", this.form);
-      }
+      if (this.$refs.form.validate()) {
+        if (
+          confirm(
+            "Are you sure you want to add leave credits for " +
+              this.form.selected.length +
+              " employees?"
+          )
+        ) {
+          this.form.encoded_by = this.$page.props.auth.user.name;
+          this.$inertia.post("/credits/storeMany", this.form);
+        }
       }
     },
   },

@@ -15,7 +15,9 @@ class LeaveCredit extends Model
          
          'employee_id',
          'period',
-         'credit',
+         'vl_credit',
+         'sl_credit',
+         'other_credit',
          'balance',
          'remarks',
 

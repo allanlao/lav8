@@ -33,11 +33,12 @@ Route::middleware('auth')
 
 Route::get('/', [DashboardController::class, 'index']);
 
-//Home
+//Positioh
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::resource('positions', PositionController::class);
 
 //Employee
+Route::get('/employees/show/{id}', [EmployeeController::class, 'show'])->name('employees.show');
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
 Route::get('/employees/create', [EmployeeController::class, 'create']);
 Route::post('/employees/store', [EmployeeController::class, 'store']);
@@ -46,7 +47,7 @@ Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
 
 
 //Leaves
-
+Route::post('/leaves', [LeaveController::class, 'store'])->name('leaves.store');
 Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
 Route::get('/leaves/create/{id}', [LeaveController::class, 'create']);
 Route::get('/leaves/delete/{id}', [LeaveController::class, 'destroy']);
@@ -64,7 +65,7 @@ Route::get('/cocs_approval/{id}/{user}/{action}', [LeaveCocController::class, 'a
 
 
 //Leave Credit
-
+Route::get('/credits/summary', [LeaveCreditController::class, 'summary'])->name('credits.summary');
 Route::get('/credits/{id}', [LeaveCreditController::class, 'index'])->name('credits.index');
 Route::post('/credits_grp', [LeaveCreditController::class, 'createByGroup'])->name('credits.grp');
 Route::get('/credits_grp', [LeaveCreditController::class, 'createByGroup']);

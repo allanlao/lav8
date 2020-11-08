@@ -39,7 +39,9 @@ class LeaveCreditController extends Controller
      */
     public function createByGroup(Request $request)
     {
-        $employees = Employee::with(['school']);
+        $employees = Employee::with(['school','credits']);
+
+    
 
         if ($request->filter != 1 ) {
 
@@ -78,7 +80,9 @@ class LeaveCreditController extends Controller
             'employee_id' => 'required|max:50',
             'period' => 'required',
             'leave_type' => 'required|max:50',
-            'credit' => 'required|numeric|min:0.1',
+            'vl_credit' => 'required|numeric|min:0.1',
+            'sl_credit' => 'required|numeric|min:0.1',
+            'other_credit' => 'required|numeric|min:0.1',
 
         ]);
 
@@ -88,8 +92,10 @@ class LeaveCreditController extends Controller
 
         $model->employee_id = $request->employee_id;
         $model->period = $request->period . "-01";
-        $model->credit = $request->credit;
-        $model->type = $request->leave_type;
+        $model->vl_credit = $request['vl_credit'];
+        $model->sl_credit = $request['sl_credit'];
+        $model->other_credit = $request['other_credit'];
+     
         $model->balance = 0;
         $model->remarks = $request->remarks;
         $model->encoded_by = $request->encoded_by;  
@@ -136,11 +142,13 @@ class LeaveCreditController extends Controller
 
             $model->employee_id = $employee;
             $model->period = $request['period'];
-            $model->credit = $request['credit'];
+            $model->vl_credit = $request['vl_credit'];
+            $model->sl_credit = $request['sl_credit'];
+            $model->other_credit = $request['other_credit'];
             $model->balance = 0;
             $model->remarks = $request['remarks'];
             $model->encoded_by = $request['encoded_by'];
-            $model->type = $request['leave_type'];
+         
             $sql_values .= $this->prepareLeaveModel($model);
             $this->insertLeaveCredits($sql_values);
         }
@@ -197,12 +205,13 @@ class LeaveCreditController extends Controller
     {
         $v[0] = "'" . $model->period . "-01'";
         $v[1] = "'" . $model->employee_id . "'";
-        $v[2] = $model->credit;
-        $v[3] = $model->balance;
-        $v[4] = "'" . $model->remarks . "'";
-        $v[5] = "'" . $model->encoded_by . "'";
-        $v[6] = "'" . $model->type . "'";
-        $v[7] = "'" .now() . "'";
+        $v[2] = $model->vl_credit;
+        $v[3] = $model->sl_credit;
+        $v[4] = $model->other_credit;
+        $v[5] = $model->balance;
+        $v[6] = "'" . $model->remarks . "'";
+        $v[7] = "'" . $model->encoded_by . "'";
+        $v[8] = "'" .now() . "'";
        
 
         $raw_value = implode(",", $v);
@@ -216,7 +225,7 @@ class LeaveCreditController extends Controller
         if (!empty($sql_values)) {
             $sql_values = substr($sql_values, 1);
             $sql = 'replace INTO leave_mc (period,
-            employee_id,credit,balance,remarks,encoded_by,type,created_at )
+            employee_id,vl_credit,sl_credit,other_credit,balance,remarks,encoded_by,created_at )
              VALUES ' . $sql_values;
 
             return DB::statement($sql);
@@ -227,7 +236,57 @@ class LeaveCreditController extends Controller
 
 
     public function summary(){
-          
+        $sql= "
+        SELECT A.id,A.firstname, A.lastname, B.name, B.division
+        ,C.vl_credit
+        ,C.sl_credit
+        ,C.other_credit
+        ,D.tvlwp
+        ,D.tslwp
+        ,D.tvlwop
+        ,D.tslwop
+        ,D.tvlo
+        ,D.tslo
+        
+        FROM employees A
+        
+        left JOIN schools B ON a.school_id = B.id
+        
+        
+        left JOIN (
+        
+        SELECT employee_id
+        ,SUM(vl_credit) AS vl_credit
+        ,SUM(sl_credit) AS sl_credit
+        ,SUM(other_credit) AS other_credit
+        FROM leave_mc 
+        GROUP BY employee_id
+        
+        ) C ON A.id = C.employee_id
+        left JOIN (
+        
+        SELECT employee_id
+        ,SUM(IF (type = 'vacation' , total_approved_with_pay ,0)) AS tvlwp
+        ,SUM(IF (type = 'sick' , total_approved_with_pay ,0)) AS tslwp
+        ,SUM(IF (type = 'vacation' , total_approved_without_pay ,0)) AS tvlwop
+        ,SUM(IF (type = 'sick' , total_approved_without_pay ,0)) AS tslwop
+        ,SUM(IF (type = 'vacation' , total_approved_others ,0)) AS tvlo
+        ,SUM(IF (type = 'sick' , total_approved_others ,0)) AS tslo
+        FROM leaves 
+        WHERE leave_status = 'approved'
+        GROUP BY employee_id
+        )   D ON A.id = D.employee_id
+        
+        GROUP BY A.id
+        
+        ";
+
+        $result =  DB::select($sql);
+
+        return Inertia::render('LeaveCredits/Summary',
+        ['data' => $result,
+           
+        ]);
 
 
     }

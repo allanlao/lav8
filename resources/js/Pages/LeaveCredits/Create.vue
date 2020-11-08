@@ -30,14 +30,32 @@
 
       <v-col cols="2" align-self="center">
         <v-text-field
-          v-model="form.credit"
-          label="Credit Amount"
+          v-model="form.vl_credit"
+          label="VL Credit Amount"
           hide-details
           outlined
           type="number"
         ></v-text-field>
       </v-col>
-      <v-col cols="3" align-self="center">
+            <v-col cols="2" align-self="center">
+        <v-text-field
+          v-model="form.sl_credit"
+          label="SL Credit Amount"
+          hide-details
+          outlined
+          type="number"
+        ></v-text-field>
+      </v-col>
+            <v-col cols="2" align-self="center">
+        <v-text-field
+          v-model="form.other_credit"
+          label="VL Credit Amount"
+          hide-details
+          outlined
+          type="number"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="2" align-self="center">
         <v-text-field
           v-model="form.remarks"
           label="Remarks"

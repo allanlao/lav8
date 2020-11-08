@@ -137,9 +137,18 @@
           </v-list-item-content>
         </v-list-item>
 
+         <v-list-item link @click="$inertia.get('/credits/summary')">
+          <v-list-item-icon>
+            <v-icon>business</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> Leave Credits Summary </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
     
 
-        <v-list-item link @click="$inertia.get('/')">
+        <v-list-item link @click="$inertia.get('/positions')">
           <v-list-item-icon>
             <v-icon>people</v-icon>
           </v-list-item-icon>

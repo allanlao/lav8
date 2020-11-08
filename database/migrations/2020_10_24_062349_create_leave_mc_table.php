@@ -18,7 +18,9 @@ class CreateLeaveMcTable extends Migration
             $table->string('employee_id',50);
             $table->date('period');
             $table->enum('type',['vl','sl']);
-            $table->decimal('credit',10,2);
+            $table->decimal('vl_credit',10,2);
+            $table->decimal('sl_credit',10,2);
+            $table->decimal('other_credit',10,2);
             $table->decimal('balance',10,2);
             $table->string('remarks',50)->nullable();
             $table->timestamps();

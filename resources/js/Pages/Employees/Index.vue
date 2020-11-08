@@ -18,13 +18,17 @@
 
       <v-row>
         <v-col>
-          <v-data-table :headers="headers" :items="data" :search="search">
-            <template v-slot:item.actions="{ item }">
+          <v-data-table :headers="headers" :items="data" :search="search"  @click:row="show">
+                    <template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
               </v-icon>
               <v-icon small primary @click="deleteItem(item)">
                 mdi-delete
+              </v-icon>
+
+              <v-icon small primary @click="show(item)">
+                mdi-eye
               </v-icon>
             </template>
           </v-data-table>
@@ -86,6 +90,10 @@ export default {
         this.$inertia.get("/employees/delete/" + item.id);
       }
     },
+
+    show(item){
+   this.$inertia.get("/employees/show/" + item.id);
+    }
   },
 };
 </script>

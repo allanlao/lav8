@@ -29,25 +29,34 @@
           </v-menu>
         </v-col>
 
-        <v-col cols="2" align-self="center">
-          <v-select
-            v-model="form.leave_type"
-            :error-messages="errors.leave_type"
-            :items="leave_type"
-            label="Leave Type"
-            outlined
-          ></v-select>
-        </v-col>
-
-        <v-col cols="2" align-self="center">
+        <v-col cols="2">
           <v-text-field
-            v-model="form.credit"
-            :error-messages="errors.credit"
-            label="Credit Amount"
+            v-model="form.vl_credit"
+            label="Vacation Leave"
             outlined
             type="number"
+            :rules="[(v) => !!v || 'Item is required']"
           ></v-text-field>
         </v-col>
+        <v-col cols="2">
+          <v-text-field
+            v-model="form.sl_credit"
+            label="Sick Leave"
+            outlined
+            type="number"
+            :rules="[(v) => !!v || 'Item is required']"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="2">
+          <v-text-field
+            v-model="form.other_credit"
+            label="Other Leave"
+            outlined
+            type="number"
+            :rules="[(v) => !!v || 'Item is required']"
+          ></v-text-field>
+        </v-col>
+
         <v-col cols="3" align-self="center">
           <v-text-field
             v-model="form.remarks"
@@ -62,7 +71,7 @@
         </v-col>
       </v-row>
 
-      <div>FLash{{$page.props.flash.success}}</div>
+      <div>FLash{{ $page.props.flash.success }}</div>
       <v-row>
         <v-col cols="12">
           <v-data-table :headers="headers" :items="data" :search="search">
@@ -83,7 +92,6 @@
 
 <script>
 import Layout from "@shared/Layout";
-
 
 export default {
   metaInfo: { title: "Leave Credits" },
@@ -109,7 +117,9 @@ export default {
     form: {
       period: null,
       employee_id: null,
-      credit: 1.25,
+      vl_credit: 1.25,
+      sl_credit: 1.25,
+      other_credit: 0.0,
       remarks: null,
       leave_type: null,
     },
@@ -117,14 +127,13 @@ export default {
     headers: [
       { text: "Period", value: "period" },
       { text: "Type", value: "type" },
-      { text: "Credit", value: "credit" },
+      { text: "VL Credit", value: "vl_credit" },
+      { text: "SL Credit", value: "sl_credit" },
+      { text: "Other Credit", value: "other_credit" },
       { text: "Remarks", value: "remarks" },
     ],
 
-    leave_type: [
-      { value: "vl", text: "Vacation Leave" },
-      { value: "sl", text: "Sick Leave" },
-    ],
+   
   }),
 
   methods: {
@@ -148,7 +157,7 @@ export default {
 
     submit() {
       this.form.employee_id = this.id;
-      this.form.encoded_by =   this.$page.props.auth.user.name; 
+      this.form.encoded_by = this.$page.props.auth.user.name;
       this.$inertia.post("/credits/storeOne", this.form);
     },
   },
