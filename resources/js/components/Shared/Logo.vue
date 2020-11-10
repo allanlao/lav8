@@ -1,6 +1,6 @@
 <template>
  <div>
-  <img src="/../storage/logo/jolibee.png" style="width:30%; height: 100%; float:left;">
+  <img src="/../storage/logo/deped-logo.png" style="width:60%; height: 100%; float:center;">
  
  </div>
 </template>

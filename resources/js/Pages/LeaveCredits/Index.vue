@@ -71,7 +71,7 @@
         </v-col>
       </v-row>
 
-      <div>FLash{{ $page.props.flash.success }}</div>
+     
       <v-row>
         <v-col cols="12">
           <v-data-table :headers="headers" :items="data" :search="search">
