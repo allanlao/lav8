@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app flat color="primary">
+  <v-app-bar app flat dark>
     
     <v-toolbar-title>
       <template v-if="$root.goBack">
