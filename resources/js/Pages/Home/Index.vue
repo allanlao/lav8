@@ -27,6 +27,9 @@
               <v-btn color="primary" outlined @click="credits(item)">
                 <v-icon> more_time </v-icon>Credits</v-btn
               >
+               <v-btn color="primary" outlined @click="trainings(item)">
+                <v-icon> more_time </v-icon>Trainings</v-btn
+              >
             </template>
           </v-data-table>
         </v-col>
@@ -84,6 +87,10 @@ export default {
 
     credits(item) {
       this.$inertia.get("/credits/" + item.id);
+    },
+
+     trainings(item) {
+      this.$inertia.get("/trainings/create/" + item.id);
     },
 
     deleteItem(item) {

@@ -15,6 +15,8 @@ class PositionController extends Controller
      */
     public function index()
     {
+
+        
         $positions = Position::all();
         return Inertia::render('Positions/Index', ['data' => $positions]);
 

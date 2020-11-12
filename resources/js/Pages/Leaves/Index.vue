@@ -7,7 +7,7 @@
             <v-icon size="40">view_list</v-icon>
           </v-btn>
 
-          <v-toolbar-title>List of Approved Leave Applications </v-toolbar-title>
+          <v-toolbar-title>List of Approved Leaves </v-toolbar-title>
         </v-app-bar>
 
         <v-card-text>

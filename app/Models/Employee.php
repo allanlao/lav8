@@ -77,4 +77,9 @@ class Employee extends Model
         {
             return $this->hasMany('App\Models\Leave ');
         }
+
+        public function trainings()
+        {
+            return $this->hasMany('App\Models\Training ');
+        }
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveCreditController;
 use App\Http\Controllers\LeaveCocController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\TrainingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +35,14 @@ Route::middleware('auth')
 
 Route::get('/', [DashboardController::class, 'index']);
 
-//Positioh
+//Position
 
 Route::resource('positions', PositionController::class);
+
+
+//schools
+Route::get('/schools/create', [SchoolController::class, 'create']);
+
 
 //Employee
 Route::get('/employees/show/{id}', [EmployeeController::class, 'show'])->name('employees.show');
@@ -72,7 +79,12 @@ Route::get('/credits_grp', [LeaveCreditController::class, 'createByGroup']);
 Route::post('/credits/storeMany', [LeaveCreditController::class, 'storeMany']);
 Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
-
+//Trainings
+//Leaves
+Route::post('/trainings', [TrainingController::class, 'store'])->name('trainings.store');
+Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+Route::get('/trainings/create/{id}', [TrainingController::class, 'create']);
+Route::get('/trainings/delete/{id}', [TrainingController::class, 'destroy']);
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
