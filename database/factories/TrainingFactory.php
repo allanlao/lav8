@@ -4,7 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Employee;
 use App\Models\Training;
-use App\Models\School;
+use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TrainingFactory extends Factory
@@ -25,15 +26,16 @@ class TrainingFactory extends Factory
     {
         return [
             'id'=> $this->faker->unique()->randomNumber(5),
-            'firstname'=> $this->faker->firstname,
-            'middlename'=> $this->faker->lastname,
-            'lastname'=> $this->faker->lastname,
-            'gender'=> $this->faker->randomElement(['male','female']),
-            'civil_status'=> $this->faker->randomElement(['single','married','divorced','widowed']),
-            'employment_status'=> $this->faker->randomElement(['probationary','regular','permanent','resigned','terminated']),
-            'email' => $this->faker->unique()->safeEmail,
-            'position_id' => Position::all(['id'])->random(),
-            'school_id' =>  School::all(['id'])->random(),
+            'title'=> $this->faker->realText($maxNbChars = 200, $indexSize = 2) ,
+            'date_from'=> $this->faker->date($format = 'Y-m-d', $max = 'now'),
+            'date_to'=> $this->faker->date($format = 'Y-m-d', $max = 'now'),
+          
+            'level'=> $this->faker->randomElement(['national','regional','division']),
+            'type'=> $this->faker->randomElement( ['managerial', 'supervisory', 'technical', 'others']),
+            'hours' => $this->faker->randomDigit,
+            'sponsor' => $this->faker->catchPhrase,
+            'employee_id' => Employee::all(['id'])->random(),
+            'encoded_by' => $this->faker->name,
             
         ];
     }

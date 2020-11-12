@@ -18,6 +18,7 @@ class CreateTrainingsTable extends Migration
             
             $table->string('employee_id', 50);
             $table->enum('type', ['managerial', 'supervisory', 'technical', 'others']);
+            $table->enum('level', ['national', 'regional', 'division']);
             $table->string('title', 100);
             $table->date('date_from');
             $table->date('date_to');

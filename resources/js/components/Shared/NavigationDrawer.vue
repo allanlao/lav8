@@ -150,7 +150,7 @@
           <v-list-item-title class="item-title">Trainings</v-list-item-title>
         </v-list-item>
 
-        <v-list-item @click="changeRoute('/trainings', 3)">
+        <v-list-item @click="changeRoutePost('/trainings', 3, null)">
           <v-list-item-action>
             <v-icon>person</v-icon>
           </v-list-item-action>
@@ -216,7 +216,7 @@ export default {
   data() {
     return {
       selectedIndex: 1,
-      toggle:true,
+   
     };
   },
 
@@ -226,6 +226,14 @@ export default {
 
       vm.selectedIndex = selectedIndex;
       vm.$inertia.get(routeName);
+      // return vm.$router.push({ name: routeName });
+    },
+
+       changeRoutePost(routeName, selectedIndex,data) {
+      const vm = this;
+
+      vm.selectedIndex = selectedIndex;
+      vm.$inertia.post(routeName,null);
       // return vm.$router.push({ name: routeName });
     },
   },

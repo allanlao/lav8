@@ -13,6 +13,6 @@ class SchoolSeeder extends Seeder
      */
     public function run()
     {
-      \App\Models\School::factory(100)->create();
+      \App\Models\School::factory(1)->create();
     }
 }

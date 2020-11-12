@@ -30,6 +30,17 @@
           ></v-select>
         </v-col>
 
+         <v-col cols="2">
+          <v-select
+            v-model="form.level"
+            :items="level"
+            :error-messages="errors.level"
+            label="Level"
+            outlined
+          ></v-select>
+        </v-col>
+
+
         <v-col cols="2">
           <v-menu
             :close-on-content-click="false"
@@ -78,10 +89,7 @@
           </v-menu>
         </v-col>
 
-       
-      </v-row>
-
-      <v-row>
+   
          <v-col cols="2">
           <v-text-field
             v-model="form.hours"
@@ -101,7 +109,7 @@
       </v-row>
        <v-row>
         <v-col cols="12">
-          <v-btn @click="submit" color="primary" outlined>Submit</v-btn>
+          <v-btn @click="submit" color="success" >Submit</v-btn>
         </v-col>
       </v-row>
 
@@ -166,6 +174,7 @@ export default {
         id: null,
         employee_id: this.employee.id,
         type: null,
+        level:null,
         title: null,
         date_from: new Date().toISOString().substr(0, 10),
         date_to: new Date().toISOString().substr(0, 10),
@@ -179,6 +188,14 @@ export default {
         { value: "technical", text: "Technical" },
         { value: "others", text: "Others" },
       ],
+
+       level: [
+        { value: "national", text: "National" },
+        { value: "regional", text: "Regional" },
+        { value: "division", text: "Division" },
+      
+      ],
+
 
       search: "",
 
@@ -199,7 +216,7 @@ export default {
     submit() {
       this.form.encoded_by = this.$page.props.auth.user.name;
 
-      this.$inertia.post("/trainings", this.form);
+      this.$inertia.post("/trainings/store", this.form);
     },
 
     deleteItem(item) {

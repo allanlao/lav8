@@ -81,8 +81,8 @@ Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
 //Trainings
 //Leaves
-Route::post('/trainings', [TrainingController::class, 'store'])->name('trainings.store');
-Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+Route::post('/trainings/store', [TrainingController::class, 'store'])->name('trainings.store');
+Route::post('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
 Route::get('/trainings/create/{id}', [TrainingController::class, 'create']);
 Route::get('/trainings/delete/{id}', [TrainingController::class, 'destroy']);
 
