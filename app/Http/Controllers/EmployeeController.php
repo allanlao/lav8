@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Leave;
+use App\Models\LeaveCoc;
+use App\Models\LeaveCredit;
 use App\Models\Position;
 use App\Models\School;
-use App\Models\LeaveCredit;
-use App\Models\LeaveCoc;
-use App\Models\Leave;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class EmployeeController extends Controller
@@ -18,27 +17,13 @@ class EmployeeController extends Controller
 
     public function index()
     {
-    
 
-      //  $data = Employee::select('id', 'firstname', 'lastname', 'school_id', 'position_id', 'firstname')
-       //     ->with(['school', 'position'])->get();
+        $positions = Position::orderBy('name')->get();
+        $schools = School::orderBy('name')->get();
+        $data = Employee::orderBy('lastname')->with(['school', 'position'])->get();
 
-   
-       $data = Employee::select('id', 'firstname', 'lastname', 'school_id', 'position_id', 'firstname')
-          ->with(['school', 'position'])->get();
-
-        return Inertia::render('Employees/Index', ['data' => $data]);
+        return Inertia::render('Employees/Index', ['data' => $data, 'schools' => $schools, 'positions' => $positions]);
     }
-
-    public function create()
-    {
-
-        $positions = Position::all();
-        $schools = School::all();
-        return Inertia::render('Employees/Create', ['schools' => $schools, 'positions' => $positions]);
-    }
-
-  
 
     public function store(Request $request)
     {
@@ -65,36 +50,31 @@ class EmployeeController extends Controller
 
         ]);
 
-        Employee::updateOrCreate(['id'=>$request->id],$validatedData);
+        Employee::updateOrCreate(['id' => $request->id], $validatedData);
+        return back()->with('success', 'Employee created/updated successfully.');
 
-        return redirect()->route('employees')->with('success', 'Employee updated.');
     }
 
-    public function update($id)
+    public function destroy($id)
     {
+        try {
+            Employee::find($id)->delete();
+        } catch (\Illuminate\Database\QueryException $e) {
 
-        $positions = Position::all();
-        $schools = School::all();
-        $employee = Employee::find($id);
-        return Inertia::render('Employees/Edit', ['schools' => $schools, 'positions' => $positions, 'employee' => $employee]);
+        }
+
+        return back()->with('success', 'Employee deleted successfully.');
+
     }
 
-    public function delete($id){
-        Employee::find($id)->delete();
-        return redirect()->route('employees');
-    }
+    public function show($id)
+    {
+        $employee = Employee::with('school', 'position')->find($id);
 
-    public function show($id){
-        $employee = Employee::with('school','position')->find($id);
+        $credits = LeaveCredit::where('employee_id', $id)->get();
+        $leaves = Leave::where('employee_id', $id)->get();
+        $cocs = LeaveCoc::where('employee_id', $id)->get();
 
-        $credits = LeaveCredit::where('employee_id',$id)->get();
-        $leaves = Leave::where('employee_id',$id)->get();
-        $cocs = LeaveCoc::where('employee_id',$id)->get();
-
-
-        
-
-
-        return Inertia::render('Employees/Show', ['employee' => $employee, 'credits'=>$credits,'leaves'=>$leaves,'cocs'=>$cocs]);
+        return Inertia::render('Employees/Show', ['employee' => $employee, 'credits' => $credits, 'leaves' => $leaves, 'cocs' => $cocs]);
     }
 }

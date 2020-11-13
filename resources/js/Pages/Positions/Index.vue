@@ -1,38 +1,37 @@
 <template>
   <CardWrapper :card_title="card.title">
-    <v-card-text class="pa-10">
-      <v-row>
-        <v-col cols="4">
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            hide-details
-            outlined
-          ></v-text-field>
-        </v-col>
-        <v-col cols="4" offset="4" align-self="center">
-          <v-btn @click="create" color="primary" large>Create Position</v-btn>
-        </v-col>
-      </v-row>
+    <v-card-text>
+      <div class="warning--text caption">* All fields are required</div>
+      <v-form ref="form" lazy-validation>
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="form.name"
+              :error-messages="errors.name"
+              label="Position Name"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12">
+            <v-btn @click="submit" color="success">Submit</v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
+      <v-divider></v-divider>
 
       <v-row>
         <v-col>
-          <v-data-table
-            :headers="headers"
-            :items="data"
-            :search="search"
-            @click:row="show"
-          >
+          <v-data-table :headers="headers" :items="data" :search="search">
             <template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
               </v-icon>
-              <v-icon small primary @click="destroy(item)">
+              <v-icon small primary @click="deleteItem(item)">
                 mdi-delete
               </v-icon>
-
-              <v-icon small primary @click="show(item)"> mdi-eye </v-icon>
             </template>
           </v-data-table>
         </v-col>
@@ -40,56 +39,72 @@
     </v-card-text>
   </CardWrapper>
 </template>
-</template>
-
-
 
 <script>
 import Layout from "@shared/Layout";
 
 export default {
-  metaInfo: { title: "Positions" },
+  metaInfo: {
+    title: "Create Position",
+    goBack: {
+      title: "Employee Trainings",
+      url: "trainings.index",
+    },
+  },
 
   layout: (h, page) => h(Layout, [page]),
 
   props: {
+    errors: Object,
     data: Array,
   },
 
-  data: (vm) => ({
-    card: {
-      title: "Positions",
-      url: "position.index",
-    },
-    title: "Positions List",
-    editedIndex: -1,
-    search: "",
-    headers: [
-      { text: "ID", value: "id" },
-      { text: "Position Name", value: "name" },
-      { text: "Created At", value: "created_at" },
-      { text: "Updated At", value: "updated_at" },
-          { text: "Actions", value: "actions" },
-    ],
-  }),
+  data() {
+    return {
+      card: {
+        title: "New Position Form",
+      },
+
+      form: {
+        id: null,
+        name: null,
+      },
+
+      search: "",
+
+      headers: [
+        { text: "Id", value: "id" },
+        { text: "Name", value: "name" },
+        { text: "Actions", value: "actions", sortable: false },
+      ],
+    };
+  },
 
   methods: {
-    create() {
-      this.$inertia.get("/positions/create");
+    submit() {
+      this.form.encoded_by = this.$page.props.auth.user.name;
+
+      this.$inertia.post("/positions", this.form, {
+        onSuccess: () => {
+          // Handle success event
+          this.reset();
+        },
+      });
+    },
+
+    reset() {
+      this.$refs.form.reset();
+    },
+
+    deleteItem(item) {
+      this.$inertia.delete("/positions/" + item.id, {
+        onBefore: () =>
+          confirm("Are you sure you want to delete this position?"),
+      });
     },
 
     editItem(item) {
-      this.$inertia.get("/destroy/" + item.id);
-    },
-
-    destroy(item) {
-      if (confirm("Are you sure you want to delete this position?")) {
-        this.$inertia.delete("/positions/" + item.id);
-      }
-    },
-
-    show(item) {
-      this.$inertia.get("/employees/show/" + item.id);
+      this.form = item;
     },
   },
 };

@@ -82,9 +82,11 @@ class LeaveController extends Controller
           
         ]);
 
-       $result =  Leave::create($validatedData);
-       return back()->with('success', 'Leave created successfully.');
-     // return Redirect::route('leaves.create');
+
+        Leave::updateOrCreate(['id' => $request->id], $validatedData);
+        return back()->with('success', 'Leave created/updated successfully.');
+     
+    
         
     }
 

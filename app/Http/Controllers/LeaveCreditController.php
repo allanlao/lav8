@@ -27,11 +27,7 @@ class LeaveCreditController extends Controller
 
     }
 
-    public function create($id)
-    {
-
-    }
-
+  
     /**
      * Show the form for creating a new resource.
      *
@@ -73,39 +69,26 @@ class LeaveCreditController extends Controller
     public function storeOne(Request $request)
     {
 
-      
+        
 
         $validatedData = $request->validate([
 
             'employee_id' => 'required|max:50',
             'period' => 'required',
-            'leave_type' => 'required|max:50',
             'vl_credit' => 'required|numeric|min:0.1',
             'sl_credit' => 'required|numeric|min:0.1',
-            'other_credit' => 'required|numeric|min:0.1',
+            'other_credit' => 'required|numeric',
+            'encoded_by' => 'required',
+            'remarks'=>'max:50',
+            'id'=>'numeric',
 
         ]);
 
-        $model = new LeaveCredit();
 
 
-
-        $model->employee_id = $request->employee_id;
-        $model->period = $request->period . "-01";
-        $model->vl_credit = $request['vl_credit'];
-        $model->sl_credit = $request['sl_credit'];
-        $model->other_credit = $request['other_credit'];
-     
-        $model->balance = 0;
-        $model->remarks = $request->remarks;
-        $model->encoded_by = $request->encoded_by;  
-
-        $model->save();
-         
-
-       // $leaveCredit = LeaveCredit::create($validatedData);
-
-      //  return redirect()->route('credits.grp')->with('success', 'Leave credit added successfully.');
+ 
+        LeaveCredit::updateOrCreate(['id' => $request->id], $validatedData);
+      
 
          return back()->with('success', 'Leave credit added successfully.');
 
@@ -167,29 +150,7 @@ class LeaveCreditController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
+ 
     /**
      * Remove the specified resource from storage.
      *
@@ -198,7 +159,9 @@ class LeaveCreditController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = LeaveCredit::destroy($id);
+
+        return back()->with('success', 'Leave Credit deleted successfully.');
     }
 
     private function prepareLeaveModel($model)

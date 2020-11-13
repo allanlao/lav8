@@ -86,9 +86,7 @@
           </v-card>
         </v-col>
 
-        <v-col cols="4">
-          <v-card> fsdf </v-card>
-        </v-col>
+   
       </v-row>
       <v-row>
         <v-col>

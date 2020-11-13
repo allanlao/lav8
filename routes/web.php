@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\EmployeeController; 
+
 use App\Http\Controllers\LeaveCreditController;
 use App\Http\Controllers\LeaveCocController;
 use App\Http\Controllers\LeaveController;
@@ -45,12 +45,8 @@ Route::get('/schools/create', [SchoolController::class, 'create']);
 
 
 //Employee
-Route::get('/employees/show/{id}', [EmployeeController::class, 'show'])->name('employees.show');
-Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
-Route::get('/employees/create', [EmployeeController::class, 'create']);
-Route::post('/employees/store', [EmployeeController::class, 'store']);
-Route::get('/employees/{id}', [EmployeeController::class, 'update']);
-Route::get('/employees/delete/{id}', [EmployeeController::class, 'delete']);
+Route::resource('employees', EmployeeController::class);
+
 
 
 //Leaves
@@ -79,12 +75,15 @@ Route::get('/credits_grp', [LeaveCreditController::class, 'createByGroup']);
 Route::post('/credits/storeMany', [LeaveCreditController::class, 'storeMany']);
 Route::post('/credits/storeOne', [LeaveCreditController::class, 'storeOne']);
 
+Route::delete('/credits/{id}', [LeaveCreditController::class, 'destroy']);
+
 //Trainings
 //Leaves
 Route::post('/trainings/store', [TrainingController::class, 'store'])->name('trainings.store');
 Route::post('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
 Route::get('/trainings/create/{id}', [TrainingController::class, 'create']);
 Route::get('/trainings/delete/{id}', [TrainingController::class, 'destroy']);
+Route::get('/trainings/edit/{id}', [TrainingController::class, 'edit']);
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

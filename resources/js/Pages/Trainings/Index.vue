@@ -122,11 +122,7 @@
         </v-col>
         <v-col cols="12">
           <v-data-table :headers="headers" :items="data">
-            <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="showItem(item)">
-                mdi-eye
-              </v-icon>
-            </template>
+          
           </v-data-table>
         </v-col>
       </v-row>
@@ -192,7 +188,7 @@ export default {
         { text: "No of Hours", value: "hours" },
         { text: "Sponsor", value: "sponsor" },
         { text: "Encoded By", value: "encoded_by" },
-        { text: "Actions", value: "actions", sortable: false },
+
       ],
     };
   },

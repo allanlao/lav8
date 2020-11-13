@@ -16,7 +16,6 @@ class PositionController extends Controller
     public function index()
     {
 
-        
         $positions = Position::all();
         return Inertia::render('Positions/Index', ['data' => $positions]);
 
@@ -43,37 +42,17 @@ class PositionController extends Controller
 
         $validatedData = $request->validate([
 
-            'name' =>  ['required', 'unique:Positions', 'max:255'],
+            'name' => ['required', 'unique:Positions', 'max:255'],
 
         ]);
 
-        Position::create($validatedData);
-
-        return redirect()->route('positions.index')->with('success', 'Position updated.');
+        $result = Position::updateOrCreate(['id' => $request->id], $validatedData);
+        return back()->with('success', 'Training created/updated successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        echo "show";
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        echo "edit";
-    }
-
+  
+   
+  
     /**
      * Update the specified resource in storage.
      *
@@ -94,8 +73,13 @@ class PositionController extends Controller
      */
     public function destroy($id)
     {
-        Position::find($id)->delete();
-        return redirect()->route('positions.index');
+        try {
+            Position::find($id)->delete();
+        } catch (\Illuminate\Database\QueryException $e) {
+
+        }
+
+        return back()->with('success', 'Position deleted successfully.');
 
     }
 }

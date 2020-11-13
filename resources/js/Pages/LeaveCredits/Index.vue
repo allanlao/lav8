@@ -23,7 +23,6 @@
             <v-date-picker
               v-model="form.period"
               no-title
-              type="month"
               @input="menu1 = false"
             ></v-date-picker>
           </v-menu>
@@ -35,7 +34,7 @@
             label="Vacation Leave"
             outlined
             type="number"
-            :rules="[(v) => !!v || 'Item is required']"
+            :error-messages="errors.vl_credit"
           ></v-text-field>
         </v-col>
         <v-col cols="2">
@@ -44,16 +43,16 @@
             label="Sick Leave"
             outlined
             type="number"
-            :rules="[(v) => !!v || 'Item is required']"
+            :error-messages="errors.sl_credit"
           ></v-text-field>
         </v-col>
         <v-col cols="2">
           <v-text-field
             v-model="form.other_credit"
-            label="Other Leave"
+            label="Other Credit"
             outlined
             type="number"
-            :rules="[(v) => !!v || 'Item is required']"
+            :error-messages="errors.other_credit"
           ></v-text-field>
         </v-col>
 
@@ -67,11 +66,10 @@
         </v-col>
 
         <v-col cols="2">
-          <v-btn large color="primary" @click="submit">Add Leave Credit</v-btn>
+          <v-btn large color="success" @click="submit">Submit</v-btn>
         </v-col>
       </v-row>
 
-     
       <v-row>
         <v-col cols="12">
           <v-data-table :headers="headers" :items="data" :search="search">
@@ -119,21 +117,20 @@ export default {
       employee_id: null,
       vl_credit: 1.25,
       sl_credit: 1.25,
-      other_credit: 0.0,
+      other_credit: null,
       remarks: null,
-      leave_type: null,
+      balance: 0,
     },
 
     headers: [
       { text: "Period", value: "period" },
-      { text: "Type", value: "type" },
+
       { text: "VL Credit", value: "vl_credit" },
       { text: "SL Credit", value: "sl_credit" },
       { text: "Other Credit", value: "other_credit" },
       { text: "Remarks", value: "remarks" },
+      { text: "Actions", value: "actions", sortable: false },
     ],
-
-   
   }),
 
   methods: {
@@ -142,22 +139,23 @@ export default {
     },
 
     editItem(item) {
-      this.$inertia.get("/employees/" + item.id);
-    },
-
-    viewCoc(item) {
-      this.$inertia.get("/cocs/" + item.id);
+      this.form = item;
     },
 
     deleteItem(item) {
       if (confirm("Are you sure you want to delete this employee?")) {
-        this.$inertia.get("/employees/delete/" + item.id);
+        this.$inertia.delete("/credits/" + item.id);
       }
     },
 
     submit() {
       this.form.employee_id = this.id;
       this.form.encoded_by = this.$page.props.auth.user.name;
+
+      if (this.period != null) {
+        this.form.period = this.period + "-01";
+      }
+
       this.$inertia.post("/credits/storeOne", this.form);
     },
   },

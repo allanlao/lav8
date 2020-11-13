@@ -7,9 +7,7 @@
         </v-col>
       </v-row>
       <v-divider></v-divider>
-      <div class="warning--text caption">
-        * All fields are required
-      </div>
+      <div class="warning--text caption">* All fields are required</div>
       <v-row>
         <v-col cols="6">
           <v-text-field
@@ -30,7 +28,7 @@
           ></v-select>
         </v-col>
 
-         <v-col cols="2">
+        <v-col cols="2">
           <v-select
             v-model="form.level"
             :items="level"
@@ -39,7 +37,6 @@
             outlined
           ></v-select>
         </v-col>
-
 
         <v-col cols="2">
           <v-menu
@@ -89,8 +86,7 @@
           </v-menu>
         </v-col>
 
-   
-         <v-col cols="2">
+        <v-col cols="2">
           <v-text-field
             v-model="form.hours"
             :error-messages="errors.hours"
@@ -107,9 +103,9 @@
           ></v-text-field>
         </v-col>
       </v-row>
-       <v-row>
+      <v-row>
         <v-col cols="12">
-          <v-btn @click="submit" color="success" >Submit</v-btn>
+          <v-btn @click="submit" color="success">Submit</v-btn>
         </v-col>
       </v-row>
 
@@ -117,11 +113,7 @@
 
       <v-row>
         <v-col>
-          <v-data-table
-            :headers="headers"
-            :items="trainings"
-            :search="search"
-          >
+          <v-data-table :headers="headers" :items="trainings" :search="search">
             <template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
@@ -166,15 +158,14 @@ export default {
         school: this.employee.school.name,
       },
       card: {
-        title: "Leave Application Form",
-        url: "employees.index",
+        title: "New Training Form",
       },
 
       form: {
         id: null,
         employee_id: this.employee.id,
         type: null,
-        level:null,
+        level: null,
         title: null,
         date_from: new Date().toISOString().substr(0, 10),
         date_to: new Date().toISOString().substr(0, 10),
@@ -189,22 +180,21 @@ export default {
         { value: "others", text: "Others" },
       ],
 
-       level: [
+      level: [
         { value: "national", text: "National" },
         { value: "regional", text: "Regional" },
         { value: "division", text: "Division" },
-      
       ],
-
 
       search: "",
 
       headers: [
         { text: "Title", value: "title" },
         { text: "Type", value: "type" },
+        { text: "Level", value: "level" },
         { text: "Date From", value: "date_from" },
         { text: "Date To", value: "date_to" },
-         { text: "No of Hours", value: "hours" },
+        { text: "No of Hours", value: "hours" },
         { text: "Sponsor", value: "sponsor" },
         { text: "Encoded By", value: "encoded_by" },
         { text: "Actions", value: "actions", sortable: false },
@@ -223,6 +213,10 @@ export default {
       if (confirm("Are you sure you want to delete this training?")) {
         this.$inertia.get("/trainings/delete/" + item.id);
       }
+    },
+
+    editItem(item) {
+      this.form = item;
     },
   },
 };

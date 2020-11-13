@@ -64,7 +64,7 @@
         ></v-text-field>
       </v-col>
 
-      <v-col cols="3" align-self="center">
+      <v-col cols="3" >
         <v-btn large color="primary" @click="submit">Add Leave Credit</v-btn>
       </v-col>
     </v-card-title>

@@ -179,7 +179,7 @@
           <v-list-item-title class="item-title">Admin</v-list-item-title>
         </v-list-item>
 
-        <v-list-item @click="changeRoute('/positions/create', 13)">
+        <v-list-item @click="changeRoute('/positions', 13)">
           <v-list-item-action>
             <v-icon>group</v-icon>
           </v-list-item-action>

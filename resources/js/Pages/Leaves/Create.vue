@@ -152,7 +152,7 @@
      
       <v-row>
         <v-col cols="12">
-          <v-btn @click="submit" color="primary" outlined>Submit</v-btn>
+          <v-btn @click="submit" color="success" >Submit</v-btn>
 
         </v-col>
       </v-row>
@@ -279,7 +279,9 @@ export default {
       this.form.leave_status = "pending";
       this.$inertia.post("/leaves", this.form);
     },
-  
+   editItem(item) {
+      this.form = item;
+    },
 
     deleteItem(item) {
       if (confirm("Are you sure you want to delete this leave?")) {

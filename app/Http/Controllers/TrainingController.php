@@ -66,7 +66,7 @@ class TrainingController extends Controller
     {
 
         $validatedData = $request->validate([
-
+            
             'employee_id' => 'required|max:50',
             'date_from' => 'required|date',
             'date_to' => 'required|date',
@@ -81,10 +81,22 @@ class TrainingController extends Controller
 
         ]);
 
-        $result = Training::create($validatedData);
+        $result = Training::updateOrCreate(['id'=> $request->id],$validatedData);
         return back()->with('success', 'Training created successfully.');
         // return Redirect::route('leaves.create');
 
     }
+
+    public function destroy($id)
+    {
+        $res = Training::destroy($id);
+
+        return back()->with('success', 'Training deleted successfully.');
+
+    }
+
+   
+
+
 
 }
