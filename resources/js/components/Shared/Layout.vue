@@ -5,7 +5,7 @@
 
     <v-main>
       <v-container fluid scroll-region>
-      
+             <flash-messages />
         <slot/>
       </v-container>
     </v-main>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-
+import FlashMessages from "./FlashMessages.vue";
 export default {
   name: "Layout",
   data() {

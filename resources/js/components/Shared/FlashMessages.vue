@@ -1,30 +1,61 @@
 <template>
-  <v-snackbar
-    v-model="snackbar"
-    color="success"
-    :timeout="6000"
-    top
-    @input="close"
-    vertical
-  >
-    {{  $page.props.flash.success }}
-    <v-btn
-      dark
-      text
-      @click="close"
+<div>
+     <v-snackbar  v-if="$page.props.flash.success && show"
+      v-model="show"
+       :timeout=3000
+      color="success"
     >
-      Close
-    </v-btn>
-  </v-snackbar>
+      {{ $page.props.flash.success }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="show = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+
+
+      <v-snackbar  v-if="$page.props.flash.error && show"
+      v-model="show"
+      :timeout=5000
+      color="warning"
+    >
+      {{ $page.props.flash.error }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="red"
+          text
+          v-bind="attrs"
+          @click="show = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    </div>
 </template>
 
 <script>
-  export default {
-    name: 'FlashMessages',
-
-      data: () => ({
-      snackbar: true,
-    
-    }),
-  }
+export default {
+  data() {
+    return {
+      show: true,
+    }
+  },
+  watch: {
+    '$page.props.flash': {
+      handler() {
+        this.show = true
+      },
+     
+    },
+  },
+}
 </script>

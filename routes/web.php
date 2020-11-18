@@ -40,6 +40,7 @@ Route::get('/', [DashboardController::class, 'index']);
 Route::resource('positions', PositionController::class);
 
 
+Route::resource('users', UserController::class);
 //schools
 Route::get('/schools/create', [SchoolController::class, 'create']);
 

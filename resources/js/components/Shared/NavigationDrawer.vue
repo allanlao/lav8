@@ -198,6 +198,17 @@
             >School</v-list-item-title
           >
         </v-list-item>
+
+
+             <v-list-item @click="changeRoute('/users', 15)">
+          <v-list-item-action>
+            <v-icon>group</v-icon>
+          </v-list-item-action>
+          <v-list-item-title
+            :class="[{ active: selectedIndex === 14 }, 'item-title']"
+            >Users</v-list-item-title
+          >
+        </v-list-item>
       </v-list-group>
     </v-list>
   </v-navigation-drawer>
@@ -226,7 +237,7 @@ export default {
 
       vm.selectedIndex = selectedIndex;
       vm.$inertia.get(routeName);
-      // return vm.$router.push({ name: routeName });
+  
     },
 
        changeRoutePost(routeName, selectedIndex,data) {

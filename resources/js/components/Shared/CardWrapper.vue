@@ -1,6 +1,5 @@
 <template>
-  <v-row>
-    <v-col cols="12">
+ 
       <v-card class="mx-10">
         <v-app-bar color="primary" flat dark>
           <v-btn icon>
@@ -12,8 +11,7 @@
 
         <slot />
       </v-card>
-    </v-col>
-  </v-row>
+  
 </template>
 
 <script>
