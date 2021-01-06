@@ -70,8 +70,8 @@ export default {
     return {
       sending: false,
       form: {
-        email: 'johndoe@example.com',
-        password: 'secret',
+        email: 'user@example.com',
+        password: 'password',
         remember: null,
       },
     }
